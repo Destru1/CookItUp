@@ -8,6 +8,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+    directUrl         = env("DIRECT_URL")
 }
 
 model Post {
@@ -17,4 +18,16 @@ model Post {
     updatedAt DateTime @updatedAt
 
     @@index([name])
+}
+model Recipe {
+    id          Int      @id @default(autoincrement())
+    title       String
+    content     String
+    servings    Int
+    prepTime    Int      // Time in minutes
+    cookTime    Int      // Time in minutes
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@index([title])
 }
