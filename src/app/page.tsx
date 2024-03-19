@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -30,6 +31,7 @@ export default function HomePage() {
               deploy it.
             </div>
           </Link>
+          <Button className="flex bg-orange-500/85 hover:bg-orange-500/60" > Button</Button>
         </div>
       </div>
     </main>
