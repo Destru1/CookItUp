@@ -4,12 +4,13 @@ import Container from "~/components/container";
 import ClientOnly from "~/components/client-only";
 import { Button } from "~/components/ui/button";
 import { ingredients } from "~/data/ingredients";
+import Modal from "~/components/modals/modal";
 
 export default function HomePage() {
   return (
     <ClientOnly>
       <Container>
-        <h1>Test</h1>
+        <Modal isOpen />
       </Container>
     </ClientOnly>
   );
