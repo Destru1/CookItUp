@@ -12,17 +12,38 @@ datasource db {
 }
 
 model User {
-    id           Int       @id @default(autoincrement())
+    id           String    @id @default(cuid())
     name         String
     email        String    @unique
-    password     String
+    password     String?
     favouriteIds String[]  @default([])
     recipes      Recipe[] // One-to-many relation with Recipe
     comments     Comment[] // One-to-many relation with Comment
+    accounts     Account[]
+}
+
+model Account {
+    id                String  @id @default(cuid())
+    userId            String  @map("user_id")
+    type              String
+    provider          String
+    providerAccountId String  @map("provider_account_id")
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@map("accounts")
 }
 
 model Recipe {
-    id        Int       @id @default(autoincrement())
+    id        String    @id @default(cuid())
     title     String
     content   String
     servings  Int
@@ -31,7 +52,7 @@ model Recipe {
     likeCount Int       @default(0)
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
-    userId    Int
+    userId    String
     comments  Comment[]
     user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -39,10 +60,10 @@ model Recipe {
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     content   String
-    userId    Int
-    recipeId  Int
+    userId    String
+    recipeId  String
     user      User     @relation(fields: [userId], references: [id])
     recipe    Recipe   @relation(fields: [recipeId], references: [id])
     createdAt DateTime @default(now())
