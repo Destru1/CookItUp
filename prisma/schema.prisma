@@ -6,28 +6,48 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-    directUrl         = env("DIRECT_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
-model Post {
+model User {
+    id           Int       @id @default(autoincrement())
+    name         String
+    email        String    @unique
+    password     String
+    favouriteIds String[]  @default([])
+    recipes      Recipe[] // One-to-many relation with Recipe
+    comments     Comment[] // One-to-many relation with Comment
+}
+
+model Recipe {
+    id        Int       @id @default(autoincrement())
+    title     String
+    content   String
+    servings  Int
+    prepTime  Int // Time in minutes
+    cookTime  Int // Time in minutes
+    likeCount Int       @default(0)
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    userId    Int
+    comments  Comment[]
+    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([title])
+}
+
+model Comment {
     id        Int      @id @default(autoincrement())
-    name      String
+    content   String
+    userId    Int
+    recipeId  Int
+    user      User     @relation(fields: [userId], references: [id])
+    recipe    Recipe   @relation(fields: [recipeId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@index([name])
-}
-model Recipe {
-    id          Int      @id @default(autoincrement())
-    title       String
-    content     String
-    servings    Int
-    prepTime    Int      // Time in minutes
-    cookTime    Int      // Time in minutes
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-
-    @@index([title])
+    @@index([userId])
+    @@index([recipeId])
 }
