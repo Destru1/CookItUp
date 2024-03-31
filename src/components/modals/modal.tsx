@@ -7,8 +7,8 @@ interface ModalProps {
   onClose: () => void;
   onSubmit: () => void;
   title?: string;
-  body?: string;
-  footer?: string;
+  body?: React.ReactElement;
+  footer?: React.ReactElement;
   primaryText?: string;
   disabled?: boolean;
   secondaryAction?: () => void;
@@ -87,22 +87,22 @@ const Modal = ({
                   <IoMdClose size={18} />
                 </button>
               </div>
-              <div className="relative flex-auto p-6">{body} asddsa</div>
+              <div className="relative flex-auto p-6">{body}</div>
               <div className="flex flex-col gap-2 p-6">
                 <div className="flex w-full flex-row items-center gap-4">
                   {secondaryAction && secondaryText && (
                     <Button
                       variant="outline"
-                      className="w-full"
+                      className="h-12"
                       disabled={disabled}
                       onClick={handleSecondaryAction}
                     >
-                      {secondaryText}sadsad
+                      {secondaryText}
                     </Button>
                   )}
 
-                  <Button onClick={handleSubmit} className="">
-                    {primaryText} sadsadsad
+                  <Button onClick={handleSubmit} className="h-12">
+                    {primaryText}
                   </Button>
                 </div>
                 {footer}
