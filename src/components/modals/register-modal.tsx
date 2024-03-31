@@ -48,7 +48,8 @@ const RegisterModal = () => {
   );
   return (
     <Modal
-      isOpen
+      disabled={isLoading}
+      isOpen={registerModal.isOpen}
       body={bodyContent}
       title="Register"
       onClose={registerModal.onClose}
