@@ -1,3 +1,5 @@
+"use client";
+
 import useRegisterModal from "~/app/hooks/useRegisterModal";
 import Modal from "./modal";
 import useLoginModal from "~/app/hooks/useLoginModal";
@@ -31,6 +33,17 @@ const RegisterModal = () => {
       <hr />
       <Button variant="outline"> Continue with Google</Button>
       <Button variant="outline"> Continue with GitHub</Button>
+      <div className=" mt-4 text-center font-light text-neutral-500">
+        <div className="flex flex-row items-center justify-center gap-2">
+          <div>Already have an account?</div>
+          <div
+            onClick={toggle}
+            className="cursor-pointer text-neutral-800 hover:underline"
+          >
+            Log in
+          </div>
+        </div>
+      </div>
     </div>
   );
   return (
@@ -38,6 +51,7 @@ const RegisterModal = () => {
       isOpen
       body={bodyContent}
       title="Register"
+      onClose={registerModal.onClose}
       primaryText="Register"
       footer={footerContent}
     />

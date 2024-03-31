@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <ClientOnly>
       <Container>
-        <RegisterModal isOpen />
+        <div>1</div>
       </Container>
     </ClientOnly>
   );

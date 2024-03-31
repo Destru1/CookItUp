@@ -2,6 +2,8 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import Header from "~/components/header/header";
+import RegisterModal from "~/components/modals/register-modal";
+import ClientOnly from "~/components/client-only";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,8 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
+        <ClientOnly>
+
         <Header />
+        <RegisterModal isOpen />
         {children}
+        </ClientOnly>
       </body>
     </html>
   );
