@@ -47,7 +47,7 @@ const LoginModal = () => {
       isOpen={loginModal.isOpen}
       onClose={loginModal.onClose}
       title="Login"
-      primaryText="Login"
+      primaryButtonText="Login"
       body={bodyContent}
       footer={footerContent}
     />

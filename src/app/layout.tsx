@@ -28,7 +28,7 @@ export default function RootLayout({
         <ClientOnly>
           <Header />
           <RegisterModal />
-          <LoginModal isOpen />
+          <LoginModal  />
           {children}
         </ClientOnly>
       </body>

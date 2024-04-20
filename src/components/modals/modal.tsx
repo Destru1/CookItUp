@@ -5,11 +5,11 @@ import { IoMdClose } from "react-icons/io";
 interface ModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  primaryButtonAction?: () => void;
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
-  primaryText?: string;
+  primaryButtonText?: string;
   disabled?: boolean;
   secondaryAction?: () => void;
   secondaryText?: string;
@@ -18,16 +18,17 @@ interface ModalProps {
 const Modal = ({
   isOpen,
   onClose,
-  onSubmit,
+  primaryButtonAction,
   title,
   body,
   footer,
-  primaryText,
+  primaryButtonText,
   disabled,
   secondaryAction,
   secondaryText,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(isOpen);
+  const [test, setTest] = useState(false);
 
   useEffect(() => {
     setShowModal(isOpen);
@@ -42,10 +43,10 @@ const Modal = ({
   }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {
-    if (disabled) return;
+    if (disabled || !primaryButtonAction) return;
     setShowModal(false);
-    onSubmit();
-  }, [disabled, onSubmit]);
+    primaryButtonAction();
+  }, [disabled, primaryButtonAction]);
 
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) return;
@@ -70,7 +71,9 @@ const Modal = ({
   outline-none
   focus:outline-none"
       >
-        <div className="relative mx-auto my-6 h-full w-full md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5 ">
+        <div
+          className={`relative mx-auto my-6 h-fit w-full px-3 md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5 ${test ? "xl:w-[90%]" : "xl:w-2/5"}`}
+        >
           <div
             className={`translate h-full duration-300 ${
               showModal ? "translate-y-0" : "translate-y-full"
@@ -87,8 +90,8 @@ const Modal = ({
                   <IoMdClose size={18} />
                 </button>
               </div>
-              <div className="relative flex-auto p-6">{body}</div>
-              <div className="flex flex-col gap-2 p-6">
+              <div className="relative flex-auto p-6 py-4">{body}</div>
+              <div className="flex flex-col gap-2 px-6 pb-4 pt-0">
                 <div className="flex w-full flex-row items-center gap-4">
                   {secondaryAction && secondaryText && (
                     <Button
@@ -100,10 +103,11 @@ const Modal = ({
                       {secondaryText}
                     </Button>
                   )}
-
-                  <Button onClick={handleSubmit} className="h-12">
-                    {primaryText}
-                  </Button>
+                  {primaryButtonAction && primaryButtonText && (
+                    <Button onClick={handleSubmit} className="h-12">
+                      {primaryButtonText}
+                    </Button>
+                  )}
                 </div>
                 {footer}
               </div>

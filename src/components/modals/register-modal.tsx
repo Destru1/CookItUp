@@ -1,12 +1,32 @@
 "use client";
 
+import axios from "axios";
 import useRegisterModal from "~/app/hooks/useRegisterModal";
 import Modal from "./modal";
 import useLoginModal from "~/app/hooks/useLoginModal";
-import { useState, useCallback } from "react";
+import { useState, useCallback, use } from "react";
+import {
+  FieldValues,
+  useForm,
+  SubmitHandler,
+  FormProvider,
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import Heading from "../heading";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { RegisterSchema } from "~/schemas";
+import { FormError } from "../form-error";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -18,18 +38,109 @@ const RegisterModal = () => {
     loginModal.onOpen();
   }, [registerModal, loginModal]);
 
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: { name: "", email: "", password: "" },
+  });
+
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setIsLoading(true);
+    console.log("values", values)
+    axios
+      .post("/api/register", values)
+      .then(() => {
+        setIsLoading(false);
+        registerModal.onClose();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error(error);
+      }); 
+  };
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome" subtitle="Create an account" />
-      <Input placeholder="Name" required />
-      <Input placeholder="Email" type="email" required />
-      <Input placeholder="Password" type="passwrod" required />
-      <Input placeholder="Repeat password" type="passwrod" required />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Email"
+                      type="email"
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Name" type="text" required />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pasword</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Password"
+                      type="password"
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="repeatPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Repeat password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Repeat Password"
+                      type="password"
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormError message=""  />
+          </div>
+          <Button className="mt-6">Register</Button>
+        </form>
+      </Form>
     </div>
   );
 
   const footerContent = (
-    <div className="mt-3 flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <hr />
       <Button variant="outline"> Continue with Google</Button>
       <Button variant="outline"> Continue with GitHub</Button>
@@ -53,8 +164,8 @@ const RegisterModal = () => {
       body={bodyContent}
       title="Register"
       onClose={registerModal.onClose}
-      primaryText="Register"
       footer={footerContent}
+ 
     />
   );
 };
