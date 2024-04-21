@@ -48,7 +48,7 @@ const Modal = ({
 
   const handleSubmit = useCallback(() => {
     if (disabled || !primaryButtonAction) return;
-    setShowModal(false);
+    //setShowModal(false);
     primaryButtonAction();
   }, [disabled, primaryButtonAction]);
 

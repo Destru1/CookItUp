@@ -6,7 +6,13 @@ import { useMemo, useState } from "react";
 import Heading from "../heading";
 import { categories } from "~/data/categories";
 import CategoryInput from "../category-input";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { Input } from "../ui/input";
 
 enum STEPS {
   CATEGORY = 0,
@@ -27,11 +33,13 @@ const RecipeModal = () => {
     handleSubmit,
     setValue,
     watch,
+    control,
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
     defaultValues: {
-      categories: "",
+      category: [],
+      name: "",
     },
   });
 
@@ -45,7 +53,6 @@ const RecipeModal = () => {
     });
   };
 
-
   const onBack = () => {
     setStep((value) => value - 1);
   };
@@ -53,7 +60,6 @@ const RecipeModal = () => {
   const onNext = () => {
     setStep((value) => value + 1);
   };
-
 
   const actionLabel = useMemo(() => {
     if (step == STEPS.IMAGES) {
@@ -64,11 +70,19 @@ const RecipeModal = () => {
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
-    if (step != STEPS.CATEGORY) {
+    if (step == STEPS.CATEGORY) {
       return undefined;
     }
     return "Back";
   }, [step]);
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.IMAGES) {
+        console.log(data);
+      return onNext();
+    }
+    console.log(data);
+  };
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -79,18 +93,45 @@ const RecipeModal = () => {
 
       <div className="grid grid-cols-3 gap-1">
         {categories.map((item) => (
-          <CategoryInput
+          <Controller
+            control={control}
+            name="category"
             key={item.label}
-            onClick={(category) => setCustomValue("category", category)}
-            selected={category == item.label}
-            icon={item.icon}
-            label={item.label}
-            
+            render={({ field }) => (
+              <CategoryInput
+                key={item.label}
+                onClick={() => {
+                  const isAlreadySelected = field.value.includes(item.label);
+                  const newValue = isAlreadySelected
+                    ? field.value.filter(
+                        (category: string) => category !== item.label,
+                      )
+                    : [...field.value, item.label];
+                  field.onChange(newValue);
+                }}
+                selected={field.value.includes(item.label)}
+                icon={item.icon}
+                label={item.label}
+              />
+            )}
           />
         ))}
       </div>
     </div>
   );
+  if(step == STEPS.NAME) {
+   
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading title="Name your recipe" subtitle="Give your recipe a name" />
+        <Input
+          className="input"
+          placeholder="Recipe name"
+          {...register("name", { required: true })}
+        />
+      </div>
+    );
+  }
 
   return (
     <Modal
@@ -100,11 +141,10 @@ const RecipeModal = () => {
       onClose={recipeModal.onClose}
       isLarge={isLarge}
       body={bodyContent}
-    primaryButtonText={actionLabel}
-    primaryButtonAction={() => {}}
-    secondaryText={secondaryActionLabel}
-    secondaryAction={step == STEPS.CATEGORY ? onBack : undefined}
-
+      primaryButtonText={actionLabel}
+      primaryButtonAction={handleSubmit(onSubmit)}
+      secondaryText={secondaryActionLabel}
+      secondaryAction={step != STEPS.CATEGORY ? onBack : undefined}
     />
   );
 };

@@ -54,6 +54,7 @@ model Recipe {
     prepTime  Int // Time in minutes
     cookTime  Int // Time in minutes
     likeCount Int       @default(0)
+    category  String[]  @default([])
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     userId    String
