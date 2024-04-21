@@ -28,6 +28,7 @@ import {
 } from "../ui/form";
 import { RegisterSchema } from "~/schemas";
 import { FormError } from "../form-error";
+import SocialLogin from "./social-login";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -59,9 +60,7 @@ const RegisterModal = () => {
       });
   };
 
-const socialOnClick = (provider: 'google' | 'github') => {
-signIn(provider, { callbackUrl: '/' });
-}
+
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -147,8 +146,7 @@ signIn(provider, { callbackUrl: '/' });
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
-      <Button variant="outline" onClick={() => socialOnClick('google')}> Continue with Google</Button>
-      <Button variant="outline" onClick={() => socialOnClick('github')}> Continue with GitHub</Button>
+     <SocialLogin/>
       <div className=" mt-4 text-center font-light text-neutral-500">
         <div className="flex flex-row items-center justify-center gap-2">
           <div>Already have an account?</div>

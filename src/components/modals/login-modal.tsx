@@ -22,6 +22,7 @@ import { login } from "~/app/actions/login";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
+import SocialLogin from "./social-login";
 
 const LoginModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -32,8 +33,8 @@ const LoginModal = () => {
 
   const router = useRouter();
   const toggle = useCallback(() => {
-    registerModal.onClose();
-    loginModal.onOpen();
+    loginModal.onClose();
+    registerModal.onOpen();
   }, [registerModal, loginModal]);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -108,6 +109,7 @@ const LoginModal = () => {
   const footerContent = (
     <div className="mt-3 flex flex-col gap-4">
       <hr />
+      <SocialLogin/>
       <div className="flex flex-row items-center justify-center">
         <div className="flex  justify-center text-center font-light text-neutral-500">
           <p>Don't have an account?</p>
@@ -115,7 +117,7 @@ const LoginModal = () => {
             onClick={toggle}
             className="ml-2 cursor-pointer text-neutral-800 hover:underline"
           >
-            Log in
+           Register
           </div>
         </div>
       </div>
