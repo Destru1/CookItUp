@@ -6,12 +6,14 @@ import MenuItem from "./menu-item";
 import useRegisterModal from "~/app/hooks/useRegisterModal";
 import useLoginModal from "~/app/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
+import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const menuRef = useRef(null);
+  const user = useCurrentUser();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -41,23 +43,31 @@ const UserMenu = () => {
         >
           <AiOutlineMenu size={20} />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={user?.image} />
           </div>
         </div>
       </div>
       {isOpen && (
         <div className="absolute right-0 top-14 w-48  rounded-md bg-white shadow-lg">
           <div className="flex cursor-pointer flex-col">
-            <MenuItem label="Profile" onClick={() => console.log("profile")} />
-            <MenuItem
-              label="Favourites"
-              onClick={() => console.log("profile")}
-            />
-            <MenuItem label="Profile" onClick={() => console.log("profile")} />
-            <MenuItem label="Logout" onClick={() => console.log("profile")} />
-            <MenuItem label="Login" onClick={loginModal.onOpen} />
-            <MenuItem label="Register" onClick={registerModal.onOpen} />
-            <MenuItem label="SignOut" onClick={handleSignOut} />
+            {user ? (
+              <>
+                <MenuItem
+                  label="Profile"
+                  onClick={() => console.log("profile")}
+                />
+                <MenuItem
+                  label="Favourites"
+                  onClick={() => console.log("profile")}
+                />
+                <MenuItem label="Logout" onClick={handleSignOut} />
+              </>
+            ) : (
+              <>
+                <MenuItem label="Login" onClick={loginModal.onOpen} />
+                <MenuItem label="Register" onClick={registerModal.onOpen} />
+              </>
+            )}
           </div>
         </div>
       )}

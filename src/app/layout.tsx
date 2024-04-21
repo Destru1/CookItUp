@@ -5,6 +5,8 @@ import Header from "~/components/header/header";
 import RegisterModal from "~/components/modals/register-modal";
 import ClientOnly from "~/components/client-only";
 import LoginModal from "~/components/modals/login-modal";
+import { SessionProvider } from "next-auth/react";
+import {auth} from 'auth'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,12 +19,14 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
+    <SessionProvider session={session}>
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <ClientOnly>
@@ -33,5 +37,6 @@ export default function RootLayout({
         </ClientOnly>
       </body>
     </html>
+    </SessionProvider>
   );
 }

@@ -1,8 +1,10 @@
-import { auth } from "auth";
+"use client";
+import { SessionProvider } from "next-auth/react";
+import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 
-const SettingsPage = async () => {
-  const session = await auth();
-  return <div>{JSON.stringify(session)}sadsad</div>;
+const SettingsPage = () => {
+  const user = useCurrentUser();
+  return <div>{JSON.stringify(user)}sadsad</div>;
 };
 
 export default SettingsPage;
