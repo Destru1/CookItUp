@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import useRegisterModal from "~/app/hooks/useRegisterModal";
+import {signIn} from "next-auth/react";
 import Modal from "./modal";
 import useLoginModal from "~/app/hooks/useLoginModal";
 import { useState, useCallback, use } from "react";
@@ -57,6 +58,10 @@ const RegisterModal = () => {
         console.error(error);
       });
   };
+
+const socialOnClick = (provider: 'google' | 'github') => {
+signIn(provider, { callbackUrl: '/' });
+}
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -142,8 +147,8 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
-      <Button variant="outline"> Continue with Google</Button>
-      <Button variant="outline"> Continue with GitHub</Button>
+      <Button variant="outline" onClick={() => socialOnClick('google')}> Continue with Google</Button>
+      <Button variant="outline" onClick={() => socialOnClick('github')}> Continue with GitHub</Button>
       <div className=" mt-4 text-center font-light text-neutral-500">
         <div className="flex flex-row items-center justify-center gap-2">
           <div>Already have an account?</div>
