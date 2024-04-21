@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
   isOpen?: boolean;
+  isLarge?: boolean;
   onClose: () => void;
   primaryButtonAction?: () => void;
   title?: string;
@@ -17,6 +18,7 @@ interface ModalProps {
 
 const Modal = ({
   isOpen,
+  isLarge,
   onClose,
   primaryButtonAction,
   title,
@@ -28,11 +30,13 @@ const Modal = ({
   secondaryText,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(isOpen);
-  const [test, setTest] = useState(false);
+  const [large, setLarge] = useState(isLarge);
 
   useEffect(() => {
     setShowModal(isOpen);
-  }, [isOpen]);
+    setLarge(isLarge);
+
+  }, [isOpen,isLarge]);
 
   const handleClose = useCallback(() => {
     if (disabled) return;
@@ -72,7 +76,7 @@ const Modal = ({
   focus:outline-none"
       >
         <div
-          className={`relative mx-auto my-6 h-fit w-full px-3 md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5 ${test ? "xl:w-[90%]" : "xl:w-2/5"}`}
+          className={`relative mx-auto my-6 h-fit w-full px-3 md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5 ${large ? "xl:w-[90%]" : "xl:w-2/5"}`}
         >
           <div
             className={`translate h-full duration-300 ${

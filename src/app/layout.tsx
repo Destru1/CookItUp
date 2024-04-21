@@ -7,6 +7,7 @@ import ClientOnly from "~/components/client-only";
 import LoginModal from "~/components/modals/login-modal";
 import { SessionProvider } from "next-auth/react";
 import {auth} from 'auth'
+import RecipeModal from "~/components/modals/recipe-modal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default async function RootLayout({
           <Header />
           <RegisterModal />
           <LoginModal  />
+          <RecipeModal  />
           {children}
         </ClientOnly>
       </body>
