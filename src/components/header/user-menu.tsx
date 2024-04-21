@@ -5,6 +5,7 @@ import Avatar from "./avatar";
 import MenuItem from "./menu-item";
 import useRegisterModal from "~/app/hooks/useRegisterModal";
 import useLoginModal from "~/app/hooks/useLoginModal";
+import { signOut } from "next-auth/react";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +17,15 @@ const UserMenu = () => {
     setIsOpen(!isOpen);
     console.log("isOpen", isOpen);
   };
-
+  const handleSignOut = () => {
+    signOut();
+  };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !(menuRef.current as HTMLElement).contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !(menuRef.current as HTMLElement).contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -51,6 +57,7 @@ const UserMenu = () => {
             <MenuItem label="Logout" onClick={() => console.log("profile")} />
             <MenuItem label="Login" onClick={loginModal.onOpen} />
             <MenuItem label="Register" onClick={registerModal.onOpen} />
+            <MenuItem label="SignOut" onClick={handleSignOut} />
           </div>
         </div>
       )}

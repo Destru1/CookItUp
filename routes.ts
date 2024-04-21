@@ -1,9 +1,9 @@
 export const publicRoutes = [
     '/',
+    '/settings',
 ]
 
 export const protectedRoutes = [
-    '/settings',
    
 ]
 

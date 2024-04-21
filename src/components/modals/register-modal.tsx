@@ -45,7 +45,7 @@ const RegisterModal = () => {
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setIsLoading(true);
-    console.log("values", values)
+    console.log("values", values);
     axios
       .post("/api/register", values)
       .then(() => {
@@ -55,7 +55,7 @@ const RegisterModal = () => {
       .catch((error) => {
         setIsLoading(false);
         console.error(error);
-      }); 
+      });
   };
 
   const bodyContent = (
@@ -131,7 +131,7 @@ const RegisterModal = () => {
                 </FormItem>
               )}
             />
-            <FormError message=""  />
+            <FormError message="" />
           </div>
           <Button className="mt-6">Register</Button>
         </form>
@@ -165,7 +165,6 @@ const RegisterModal = () => {
       title="Register"
       onClose={registerModal.onClose}
       footer={footerContent}
- 
     />
   );
 };

@@ -4,24 +4,105 @@ import useRegisterModal from "~/app/hooks/useRegisterModal";
 import Heading from "../heading";
 import { Input } from "../ui/input";
 import Modal from "./modal";
+import * as z from "zod";
 import useLoginModal from "~/app/hooks/useLoginModal";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { LoginSchema } from "~/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { login } from "~/app/actions/login";
+import { Button } from "../ui/button";
+import { FormError } from "../form-error";
+import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
+  const [isPending, startTransition] = useTransition();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>("");
 
+  const router = useRouter();
   const toggle = useCallback(() => {
     registerModal.onClose();
     loginModal.onOpen();
   }, [registerModal, loginModal]);
 
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    startTransition(() => {
+      login(values).then((data) => {
+        setError(data?.error);
+        if(!data?.error){
+          loginModal.onClose();
+          router.refresh();
+        }
+      });
+    });
+  };
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome back" subtitle="Login to your account" />
-      <Input placeholder="Email" type="email" required />
-      <Input placeholder="Password" type="password" required />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Email"
+                      type="email"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pasword</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Password"
+                      type="password"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormError message={error} />
+          </div>
+          <Button className="mt-6" disabled={isPending}>
+            Login
+          </Button>
+        </form>
+      </Form>
     </div>
   );
   const footerContent = (
