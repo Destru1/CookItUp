@@ -11,9 +11,9 @@ import Categories from "~/components/categories";
 export default function HomePage() {
   return (
     <ClientOnly>
-      <Container>
+     
        <Categories/>
-      </Container>
+      
     </ClientOnly>
   );
 }

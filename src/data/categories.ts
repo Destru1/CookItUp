@@ -1,13 +1,25 @@
 import { BiLeaf, BiCake, BiDrink } from "react-icons/bi";
 import { GiChickenOven, GiSandwich } from "react-icons/gi";
-import { MdBreakfastDining, MdDinnerDining, MdLunchDining, MdFastfood } from "react-icons/md";
-import { FaPizzaSlice, FaBreadSlice, FaPepperHot,FaFish } from "react-icons/fa";
+import {
+  MdBreakfastDining,
+  MdDinnerDining,
+  MdLunchDining,
+  MdFastfood,
+} from "react-icons/md";
+import {
+  FaPizzaSlice,
+  FaBreadSlice,
+  FaPepperHot,
+  FaFish,
+} from "react-icons/fa";
+import { TbSalad } from "react-icons/tb";
 
 export const categories = [
   { label: "Vegetarian", icon: BiLeaf },
   { label: "Bakery", icon: BiCake },
   { label: "Beverages", icon: BiDrink },
   { label: "Poultry", icon: GiChickenOven },
+  { label: "Salads", icon: TbSalad },
   { label: "Seafood", icon: FaFish },
   { label: "Fast Food", icon: MdFastfood },
   { label: "Pizza", icon: FaPizzaSlice },
