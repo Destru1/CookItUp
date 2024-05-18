@@ -11,8 +11,11 @@ import {
   FieldValues,
   SubmitHandler,
   useForm,
+  useFieldArray,
 } from "react-hook-form";
 import { Input } from "../ui/input";
+import { ingredients } from "~/data/ingredients";
+import { Button } from "../ui/button";
 
 enum STEPS {
   CATEGORY = 0,
@@ -27,6 +30,12 @@ const RecipeModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLarge, setIsLarge] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [ingredients, setIngredients] = useState<
+    { quantity: string; measurement: string; name: string }[]
+  >([]);
+  const [quantity, setQuantity] = useState("");
+  const [measurement, setMeasurement] = useState("gr");
+  const [ingredient, setIngredient] = useState("");
 
   const {
     register,
@@ -40,10 +49,11 @@ const RecipeModal = () => {
     defaultValues: {
       category: [],
       name: "",
+      ingredients: [],
     },
   });
 
-  const category = watch("category");
+  //const category = watch("category");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -78,11 +88,24 @@ const RecipeModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.IMAGES) {
-        console.log(data);
+      console.log(data);
       return onNext();
     }
     console.log(data);
   };
+  const handleAddIngredient = (newIngredient: string) => {
+    setIngredients([
+      ...ingredients,
+      { quantity, measurement, name: newIngredient },
+    ]);
+    setQuantity("");
+    setMeasurement(measurement);
+  };
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "ingredients",
+  });
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -119,8 +142,7 @@ const RecipeModal = () => {
       </div>
     </div>
   );
-  if(step == STEPS.NAME) {
-   
+  if (step == STEPS.NAME) {
     bodyContent = (
       <div className="flex flex-col gap-4">
         <Heading title="Name your recipe" subtitle="Give your recipe a name" />
@@ -129,6 +151,72 @@ const RecipeModal = () => {
           placeholder="Recipe name"
           {...register("name", { required: true })}
         />
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-2">
+            <Input
+              className="input w-[60px]"
+              placeholder="Qnt."
+              value={quantity}
+              onChange={(event) => setQuantity(event.target.value)}
+              required
+            />
+            <select
+              className="input h-[48px] w-[80px] rounded-md border border-gray-300"
+              value={measurement}
+              onChange={(event) => setMeasurement(event.target.value)}
+              defaultValue={"gr"}
+            >
+              <option value="grams">gr</option>
+              <option value="tbs">tbs</option>
+              <option value="tsp">tsp</option>
+              <option value="ml">ml</option>
+            </select>
+            <Input
+              className="input"
+              placeholder="Add ingredient"
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  handleAddIngredient(event.currentTarget.value);
+                  event.currentTarget.value = "";
+                }
+              }}
+              onChange={(event) => setIngredient(event.target.value)}
+              required
+              value={ingredient}
+            />
+            <Button
+              className="button h-[48px] w-[60px]"
+              variant="outline"
+              onClick={() => {
+                handleAddIngredient(ingredient);
+                setIngredient("");
+                console.log(ingredients);
+                append({ quantity, measurement, name: ingredient });
+              }}
+            >
+              Add
+            </Button>
+          </div>
+          {ingredients.map((ingredient, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-2"
+            >
+              <div>{`${ingredient.quantity} ${ingredient.measurement} ${ingredient.name}`}</div>
+              <button
+                onClick={() => {
+                  const newIngredients = [...ingredients];
+                  newIngredients.splice(index, 1);
+                  setIngredients(newIngredients);
+                  remove(index);
+                }}
+              >
+                {/* TODO add remove icon */}
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
