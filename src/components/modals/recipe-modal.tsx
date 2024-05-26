@@ -275,6 +275,7 @@ const RecipeModal = () => {
         <Controller
           name="description"
           control={control}
+          rules={{ required: "Description is required" }}
           defaultValue=""
           render={({ field }) => (
             <Textarea
@@ -290,6 +291,7 @@ const RecipeModal = () => {
   }
 
   if (step === STEPS.IMAGES) {
+    
   }
 
   return (
