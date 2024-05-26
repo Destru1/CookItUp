@@ -16,6 +16,7 @@ import {
 import { Input } from "../ui/input";
 import { ingredients } from "~/data/ingredients";
 import { Button } from "../ui/button";
+import Counter from "../counter";
 
 enum STEPS {
   CATEGORY = 0,
@@ -50,6 +51,9 @@ const RecipeModal = () => {
       category: [],
       name: "",
       ingredients: [],
+      servingsCount: 1,
+      calories: 1,
+      cookTime: 1,
     },
   });
 
@@ -106,6 +110,10 @@ const RecipeModal = () => {
     control,
     name: "ingredients",
   });
+
+  const servingsCount = watch("servingsCount");
+  const cookTime = watch("cookTime");
+  const calories = watch("calories");
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -219,6 +227,45 @@ const RecipeModal = () => {
         </div>
       </div>
     );
+  }
+
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading title="Recipe info" subtitle="Add additional information" />
+
+        <Counter
+          title="Servings"
+          subtitle="Number of servings"
+          value={servingsCount}
+          onChange={(value) => {
+            setCustomValue("servingsCount", value);
+          }}
+        />
+        <Counter
+          title="Cook time"
+          subtitle="Time to cook in minutes"
+          value={cookTime}
+          onChange={(value) => {
+            setCustomValue("cookTime", value);
+          }}
+        />
+        <Counter
+          title="Calories"
+          subtitle="Number of calories per serving"
+          value={calories}
+          valueIncrement={10}
+          onChange={(value) => {
+            setCustomValue("calories", value);
+          }}
+        />
+      </div>
+    );
+  }
+  if (step === STEPS.DESCRIPTION) {
+  }
+
+  if (step === STEPS.IMAGES) {
   }
 
   return (

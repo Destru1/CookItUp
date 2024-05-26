@@ -51,9 +51,9 @@ model Recipe {
     title     String
     content   String
     servings  Int
-    prepTime  Int // Time in minutes
     cookTime  Int // Time in minutes
-    likeCount Int       @default(0)
+    calories  Int
+    likeCount Int?       @default(0)
     category  String[]  @default([])
     ingredients  String[]  @default([])
     createdAt DateTime  @default(now())
