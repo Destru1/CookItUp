@@ -17,6 +17,7 @@ import { Input } from "../ui/input";
 import { ingredients } from "~/data/ingredients";
 import { Button } from "../ui/button";
 import Counter from "../counter";
+import { Textarea } from "../ui/textarea";
 
 enum STEPS {
   CATEGORY = 0,
@@ -54,6 +55,7 @@ const RecipeModal = () => {
       servingsCount: 1,
       calories: 1,
       cookTime: 1,
+      description: "",
     },
   });
 
@@ -114,6 +116,7 @@ const RecipeModal = () => {
   const servingsCount = watch("servingsCount");
   const cookTime = watch("cookTime");
   const calories = watch("calories");
+  const description = watch("description");
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -263,6 +266,27 @@ const RecipeModal = () => {
     );
   }
   if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading
+          title="Recipe description"
+          subtitle="Add a description for your recipe"
+        />
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <Textarea
+              {...field}
+              onChange={(value) => {
+                field.onChange(value);
+              }}
+            />
+          )}
+        />
+      </div>
+    );
   }
 
   if (step === STEPS.IMAGES) {
