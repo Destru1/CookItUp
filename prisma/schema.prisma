@@ -47,20 +47,21 @@ model Account {
 }
 
 model Recipe {
-    id        String    @id @default(cuid())
-    title     String
-    content   String
-    servings  Int
-    cookTime  Int // Time in minutes
-    calories  Int
-    likeCount Int?       @default(0)
-    category  String[]  @default([])
-    ingredients  String[]  @default([])
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    userId    String
-    comments  Comment[]
-    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id          String    @id @default(cuid())
+    title       String
+    content     String
+    servings    Int
+    cookTime    Int // Time in minutes
+    calories    Int
+    likeCount   Int?      @default(0)
+    imageUrl    String
+    category    String[]  @default([])
+    ingredients String[]  @default([])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    userId      String
+    comments    Comment[]
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@index([title])
 }

@@ -2,7 +2,7 @@
 
 import useRecipeModal from "~/app/hooks/useRecipeModal";
 import Modal from "./modal";
-import { useMemo, useState } from "react";
+import { use, useMemo, useState } from "react";
 import Heading from "../heading";
 import { categories } from "~/data/categories";
 import CategoryInput from "../category-input";
@@ -18,6 +18,7 @@ import { ingredients } from "~/data/ingredients";
 import { Button } from "../ui/button";
 import Counter from "../counter";
 import { Textarea } from "../ui/textarea";
+import ImageUpload from "../uploadthing/image-upload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -56,6 +57,7 @@ const RecipeModal = () => {
       calories: 1,
       cookTime: 1,
       description: "",
+      imageSrc: "",
     },
   });
 
@@ -117,6 +119,7 @@ const RecipeModal = () => {
   const cookTime = watch("cookTime");
   const calories = watch("calories");
   const description = watch("description");
+  const imageSrc = watch("imageSrc");
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -291,7 +294,34 @@ const RecipeModal = () => {
   }
 
   if (step === STEPS.IMAGES) {
-    
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading title="Add images" subtitle="Add images for your recipe" />
+        {/* <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            // Do something with the response
+            console.log("Files: ", res);
+            setImageUrl(res[0].url);
+            setCustomValue("imageSrc", res[0].url);
+          }}
+          onUploadError={(error: Error) => {
+            // Do something with the error.
+            alert(`ERROR! ${error.message}`);
+          }}
+        />
+        {imageUrl && (
+          <Image
+            alt="Image"
+            src={imageUrl}
+            width={500}
+            height={500}
+            style={{ objectFit: "cover" }}
+          />
+        )} */}
+        <ImageUpload setCustomValue={setCustomValue} />
+      </div>
+    );
   }
 
   return (
