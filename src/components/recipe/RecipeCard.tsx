@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Recipe } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { SafeRecipe } from "~/app/types";
+import { SafeRecipe, SafeUser } from "~/app/types";
 import HeartButton from "../heart-button";
 
 interface RecipeCardProps {
   data: SafeRecipe;
+  currentUser?: SafeUser | null;
 }
-const RecipeCard = ({ data }: RecipeCardProps) => {
+const RecipeCard = ({ data, currentUser }: RecipeCardProps) => {
   const router = useRouter();
 
   return (
@@ -28,8 +28,7 @@ const RecipeCard = ({ data }: RecipeCardProps) => {
               className="h-full w-full object-cover transition group-hover:scale-110"
             />
             <div className="absolute right-3 top-3">
-              {/* //   <HeartButton listingId={data.id} currentUser={currentUser} /> */}
-              <HeartButton />
+              <HeartButton recipeId={data.id} currentUser={currentUser} />
             </div>
           </div>
           <div className="text-lg font-semibold">{data.title}</div>
