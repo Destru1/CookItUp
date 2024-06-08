@@ -30,6 +30,16 @@ export async function POST(req: Request, { params }: { params: IParams }) {
       favouriteIds: favouritesIds,
     },
   });
+  const recipe = await db.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      likeCount: {
+        increment: 1,
+      },
+    },
+  });
 
   return NextResponse.json(user);
 }
@@ -59,5 +69,15 @@ export async function DELETE(req: Request, { params }: { params: IParams }) {
     },
   });
 
+  const recipe = await db.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      likeCount: {
+        decrement: 1,
+      },
+    },
+  });
   return NextResponse.json(user);
 }
