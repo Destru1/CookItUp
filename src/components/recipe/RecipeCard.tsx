@@ -4,6 +4,7 @@ import { Recipe } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SafeRecipe } from "~/app/types";
+import HeartButton from "../heart-button";
 
 interface RecipeCardProps {
   data: SafeRecipe;
@@ -28,6 +29,7 @@ const RecipeCard = ({ data }: RecipeCardProps) => {
             />
             <div className="absolute right-3 top-3">
               {/* //   <HeartButton listingId={data.id} currentUser={currentUser} /> */}
+              <HeartButton />
             </div>
           </div>
           <div className="text-lg font-semibold">{data.title}</div>
