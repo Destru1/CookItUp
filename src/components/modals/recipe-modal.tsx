@@ -4,6 +4,7 @@ import useRecipeModal from "~/app/hooks/useRecipeModal";
 import Modal from "./modal";
 import { use, useMemo, useState } from "react";
 import Heading from "../heading";
+import axios from "axios";
 import { categories } from "~/data/categories";
 import CategoryInput from "../category-input";
 import {
@@ -19,6 +20,7 @@ import { Button } from "../ui/button";
 import Counter from "../counter";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../uploadthing/image-upload";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
   CATEGORY = 0,
@@ -29,6 +31,7 @@ enum STEPS {
 }
 
 const RecipeModal = () => {
+  const router = useRouter();
   const recipeModal = useRecipeModal();
   const [isLoading, setIsLoading] = useState(false);
   const [isLarge, setIsLarge] = useState(false);
@@ -51,7 +54,7 @@ const RecipeModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: [],
-      name: "",
+      title: "",
       ingredients: [],
       servingsCount: 1,
       calories: 1,
@@ -96,9 +99,17 @@ const RecipeModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.IMAGES) {
-      console.log(data);
       return onNext();
     }
+    setIsLoading(true);
+    axios.post("/api/recipes", data).then(() => {
+      setIsLoading(false);
+      router.refresh()
+      reset();
+      setStep(STEPS.CATEGORY);
+      setIngredients([]);
+      recipeModal.onClose();
+    });
     console.log(data);
   };
   const handleAddIngredient = (newIngredient: string) => {
@@ -163,7 +174,7 @@ const RecipeModal = () => {
         <Input
           className="input"
           placeholder="Recipe name"
-          {...register("name", { required: true })}
+          {...register("title", { required: true })}
         />
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
