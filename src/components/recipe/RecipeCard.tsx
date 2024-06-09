@@ -17,7 +17,7 @@ const RecipeCard = ({ data, currentUser }: RecipeCardProps) => {
   return (
     <>
       <div
-        onClick={() => router.push(`/listings/${data.id}`)}
+        onClick={() => router.push(`/recipes/${data.id}`)}
         key={data.id}
         className="group col-span-1 cursor-pointer rounded-lg shadow-lg"
       >
