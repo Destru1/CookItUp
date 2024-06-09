@@ -7,6 +7,7 @@ import useRegisterModal from "~/app/hooks/useRegisterModal";
 import useLoginModal from "~/app/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ const UserMenu = () => {
   const loginModal = useLoginModal();
   const menuRef = useRef(null);
   const user = useCurrentUser();
+  const router = useRouter();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -58,7 +60,7 @@ const UserMenu = () => {
                 />
                 <MenuItem
                   label="Favourites"
-                  onClick={() => console.log("profile")}
+                  onClick={() => router.push("/favourites")}
                 />
                 <MenuItem label="Logout" onClick={handleSignOut} />
               </>
