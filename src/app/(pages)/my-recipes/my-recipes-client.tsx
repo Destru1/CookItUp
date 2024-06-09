@@ -16,7 +16,7 @@ interface MyRecipesClientProps {
 const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState("");
-
+  const [editId, setEditId] = useState("");
   const onCancel = useCallback(
     (id: string) => {
       setDeleteId(id);
@@ -39,6 +39,11 @@ const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
     },
     [router],
   );
+  const onEdit = useCallback((id: string) => {
+    setEditId(id);
+
+    //TODO Implement edit
+  }, []);
   return (
     <Container>
       <div className="mt-6">
@@ -56,6 +61,8 @@ const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
                 data={recipe}
                 onAction={onCancel}
                 actionLabel="Delete"
+                onEdit={onEdit}
+                editLabel="Edit"
                 actionId={recipe.id}
                 disabled={deleteId === recipe.id}
               />

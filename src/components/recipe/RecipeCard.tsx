@@ -12,9 +12,11 @@ interface RecipeCardProps {
   data: SafeRecipe;
   currentUser?: SafeUser | null;
   onAction?: (id: string) => void;
+  onEdit?: (id: string) => void;
   actionLabel?: string;
   actionId?: string;
   disabled?: boolean;
+  editLabel?: string;
 }
 const RecipeCard = ({
   data,
@@ -23,6 +25,8 @@ const RecipeCard = ({
   actionLabel,
   actionId = "",
   disabled,
+  editLabel,
+  onEdit
 }: RecipeCardProps) => {
   const router = useRouter();
 
@@ -37,6 +41,18 @@ const RecipeCard = ({
       onAction?.(actionId);
     },
     [onAction, actionId, disabled],
+  );
+  const handleUpdate = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (disabled) {
+        console.log("disabled");
+        return;
+      }
+   
+      onEdit?.(actionId);
+    },
+    [onEdit, actionId, disabled],
   );
 
   return (
@@ -90,6 +106,17 @@ const RecipeCard = ({
             className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
           >
             {actionLabel}
+          </Button>
+        )}
+        {onEdit && editLabel && (
+          <Button
+            disabled={disabled}
+            size="sm"
+            onClick={handleUpdate}
+            variant="secondary"
+            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
+          >
+            {editLabel}
           </Button>
         )}
       </div>
