@@ -4,6 +4,7 @@ export interface IRecipesParams {
   title?: string;
   ingredients?: string;
   category?: string;
+  userId?: string;
 }
 
 export default async function getRecipes(params: IRecipesParams) {
@@ -13,6 +14,7 @@ export default async function getRecipes(params: IRecipesParams) {
     const categories = params.category ? params.category.split(",") : [];
     const title = params.title || "";
     const ingredients = params.ingredients || "";
+    const userId = params.userId || "";
     let query: any = {};
 
     if (title) {
@@ -27,6 +29,9 @@ export default async function getRecipes(params: IRecipesParams) {
     }
     if (categories.length > 0) {
       query.category = { hasSome: categories };
+    }
+    if (userId) {
+      query.userId = userId;
     }
     const recipes = await db.recipe.findMany({
       where: query,

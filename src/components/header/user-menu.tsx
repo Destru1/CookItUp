@@ -59,6 +59,10 @@ const UserMenu = () => {
                   onClick={() => console.log("profile")}
                 />
                 <MenuItem
+                  label="My recipes"
+                  onClick={() => router.push("/my-recipes")}
+                />
+                <MenuItem
                   label="Favourites"
                   onClick={() => router.push("/favourites")}
                 />

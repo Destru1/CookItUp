@@ -1,18 +1,43 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SafeRecipe, SafeUser } from "~/app/types";
 import HeartButton from "../heart-button";
 import { Badge } from "../ui/badge";
 import { FaRegClock, FaUtensils } from "react-icons/fa";
+import { Button } from "../ui/button";
 
 interface RecipeCardProps {
   data: SafeRecipe;
   currentUser?: SafeUser | null;
+  onAction?: (id: string) => void;
+  actionLabel?: string;
+  actionId?: string;
+  disabled?: boolean;
 }
-const RecipeCard = ({ data, currentUser }: RecipeCardProps) => {
+const RecipeCard = ({
+  data,
+  currentUser,
+  onAction,
+  actionLabel,
+  actionId = "",
+  disabled,
+}: RecipeCardProps) => {
   const router = useRouter();
+
+  const handleCancel = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (disabled) {
+        console.log("disabled");
+        return;
+      }
+      console.log("actionId", actionId);
+      onAction?.(actionId);
+    },
+    [onAction, actionId, disabled],
+  );
 
   return (
     <>
@@ -48,23 +73,25 @@ const RecipeCard = ({ data, currentUser }: RecipeCardProps) => {
             </div>
           </div>
           <div className="px-2 pb-2">
-          <div className="font-light text-neutral-500">
-            {Array.isArray(data.category)
-              ? data.category.join(", ")
-              : data.category}
+            <div className="font-light text-neutral-500">
+              {Array.isArray(data.category)
+                ? data.category.join(", ")
+                : data.category}
+            </div>
+            <div className="text-lg font-semibold">{data.title}</div>
           </div>
-          <div className="text-lg font-semibold">{data.title}</div>
-     
-          </div>
-          {/* {onAction && actionLabel && (
-              <Button
-                disabled={disabled}
-                small
-                label={actionLabel}
-                onClick={handleCancel}
-              />
-            )} */}
         </div>
+        {onAction && actionLabel && (
+          <Button
+            disabled={disabled}
+            size="sm"
+            onClick={handleCancel}
+            variant="destructive"
+            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
+          >
+            {actionLabel}
+          </Button>
+        )}
       </div>
     </>
   );
