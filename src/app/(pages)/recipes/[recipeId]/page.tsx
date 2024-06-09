@@ -13,6 +13,7 @@ const RecipePage = async ({ params }: { params: IParams }) => {
   return (
     <ClientOnly>
       <RecipeClient recipe={recipe} currentUser={currentUser} />
+      
     </ClientOnly>
   );
 };
