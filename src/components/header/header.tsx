@@ -7,6 +7,7 @@ import useLoginModal from "~/app/hooks/useLoginModal";
 import useRecipeModal from "~/app/hooks/useRecipeModal";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 import { useCallback } from "react";
+import Image from "next/image";
 
 export default function Header() {
   const loginModal = useLoginModal();
@@ -18,7 +19,7 @@ export default function Header() {
       return loginModal.onOpen();
     }
 
-      recipeModal.onOpen();
+    recipeModal.onOpen();
     console.log("Create recipe");
   }, [user, loginModal, recipeModal]);
 
@@ -27,8 +28,15 @@ export default function Header() {
       <Container>
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center">
-            <Link href="/">
-              <div>CookitUp</div>
+            <Link href="/" className="flex items-center">
+              <Image
+                alt="Logo"
+                src={"/logo.png"}
+                width={50}
+                height={50}
+                className="object-cover"
+              />
+              <h3>CookItUp</h3>
             </Link>
           </div>
           <Search />
