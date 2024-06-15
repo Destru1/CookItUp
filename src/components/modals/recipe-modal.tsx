@@ -104,7 +104,7 @@ const RecipeModal = () => {
     setIsLoading(true);
     axios.post("/api/recipes", data).then(() => {
       setIsLoading(false);
-      router.refresh()
+      router.refresh();
       reset();
       setStep(STEPS.CATEGORY);
       setIngredients([]);
@@ -293,6 +293,7 @@ const RecipeModal = () => {
           defaultValue=""
           render={({ field }) => (
             <Textarea
+              className="h-[200px] resize-none"
               {...field}
               onChange={(value) => {
                 field.onChange(value);
