@@ -21,7 +21,7 @@ export const categories = [
   { label: "Poultry", icon: GiChickenOven },
   { label: "Salads", icon: TbSalad },
   { label: "Seafood", icon: FaFish },
-  { label: "Fast Food", icon: MdFastfood },
+  // { label: "Fast Food", icon: MdFastfood },
   { label: "Pizza", icon: FaPizzaSlice },
   { label: "Bread", icon: FaBreadSlice },
   { label: "Spicy", icon: FaPepperHot },

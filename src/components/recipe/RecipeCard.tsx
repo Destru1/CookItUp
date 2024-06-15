@@ -104,7 +104,7 @@ const RecipeCard = ({
             size="sm"
             onClick={handleUpdate}
             variant="secondary"
-            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
+            className="mx-auto mb-4 flex w-[80%] rounded-b-lg transition hover:bg-neutral-300/80"
           >
             {editLabel}
           </Button>
@@ -116,7 +116,7 @@ const RecipeCard = ({
             size="sm"
             onClick={handleCancel}
             variant="destructive"
-            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
+            className="mx-auto mb-4 flex w-[80%] rounded-b-lg transition hover:bg-rose-500/80"
           >
             {actionLabel}
           </Button>
