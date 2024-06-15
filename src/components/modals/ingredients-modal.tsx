@@ -6,6 +6,7 @@ import Modal from "./modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 const IngredientsModal = () => {
   const ingredientModal = useIngredientsModal();
@@ -40,10 +41,10 @@ const IngredientsModal = () => {
       {ingredients.map((ingredient, index) => (
         <Badge
           key={index}
-          className={`cursor-pointer rounded-md border-2 p-2 transition-all ${
+          className={`cursor-pointer rounded-md border-2  p-2 text-slate-900 transition-all hover:border-slate-500 hover:bg-transparent ${
             selectedIngredients.includes(ingredient)
-              ? "bg-slate-900 text-white"
-              : "bg-white text-slate-900"
+              ? " border-slate-500 bg-transparent text-slate-900 hover:text-slate-900 "
+              : "bg-white "
           }`}
           onClick={() => handleIngredientClick(ingredient)}
         >
@@ -54,14 +55,15 @@ const IngredientsModal = () => {
   );
 
   const footerContent = (
-    <button
+    <Button
+      className="mx-auto mt-4 "
       onClick={() => {
         ingredientModal.onClose();
         handleSearch();
       }}
     >
       Search
-    </button>
+    </Button>
   );
 
   return (
