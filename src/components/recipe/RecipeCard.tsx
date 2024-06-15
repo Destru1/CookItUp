@@ -62,7 +62,7 @@ const RecipeCard = ({
         key={data.id}
         className="group col-span-1 cursor-pointer rounded-lg"
       >
-        <div className="flex w-full flex-col gap-2">
+        <div className="mb-4 flex w-full flex-col gap-2">
           <div className="relative aspect-square w-full overflow-hidden rounded-xl">
             <Image
               fill
@@ -97,17 +97,7 @@ const RecipeCard = ({
             <div className="text-lg font-semibold">{data.title}</div>
           </div>
         </div>
-        {onAction && actionLabel && (
-          <Button
-            disabled={disabled}
-            size="sm"
-            onClick={handleCancel}
-            variant="destructive"
-            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
-          >
-            {actionLabel}
-          </Button>
-        )}
+
         {onEdit && editLabel && (
           <Button
             disabled={disabled}
@@ -117,6 +107,18 @@ const RecipeCard = ({
             className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
           >
             {editLabel}
+          </Button>
+        )}
+
+        {onAction && actionLabel && (
+          <Button
+            disabled={disabled}
+            size="sm"
+            onClick={handleCancel}
+            variant="destructive"
+            className="mx-auto mb-4 flex w-[80%] rounded-b-lg"
+          >
+            {actionLabel}
           </Button>
         )}
       </div>
