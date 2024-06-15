@@ -121,160 +121,182 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-4">
-      <div className="flex flex-col gap-4">
-        <Heading
-          title="Pick a category"
-          subtitle="Select a category for your meal"
-        />
-        <div className="grid grid-cols-3 gap-1">
-          {categories.map((item) => (
-            <Controller
-              control={control}
-              name="category"
-              key={item.label}
-              render={({ field }) => (
-                <CategoryInput
-                  key={item.label}
-                  onClick={() => {
-                    const isAlreadySelected = field.value.includes(item.label);
-                    const newValue = isAlreadySelected
-                      ? field.value.filter(
-                          (category) => category !== item.label,
-                        )
-                      : [...field.value, item.label];
-                    field.onChange(newValue);
-                  }}
-                  selected={field.value.includes(item.label)}
-                  icon={item.icon}
-                  label={item.label}
-                />
-              )}
-            />
-          ))}
+      <div className="flex flex-col gap-6 md:grid grid-cols-2 ">
+        <div className="flex flex-col gap-2 pr-2">
+          <Heading
+            title="Categories"
+            subtitle="Select a categories for your meal"
+          />
+          <div className="grid grid-cols-3 gap-4">
+            {categories.map((item) => (
+              <Controller
+                control={control}
+                name="category"
+                key={item.label}
+                render={({ field }) => (
+                  <CategoryInput
+                    key={item.label}
+                    onClick={() => {
+                      const isAlreadySelected = field.value.includes(
+                        item.label,
+                      );
+                      const newValue = isAlreadySelected
+                        ? field.value.filter(
+                            (category) => category !== item.label,
+                          )
+                        : [...field.value, item.label];
+                      field.onChange(newValue);
+                    }}
+                    selected={field.value.includes(item.label)}
+                    icon={item.icon}
+                    label={item.label}
+                  />
+                )}
+              />
+            ))}
+          </div>
         </div>
 
-        <Heading title="Name your recipe" subtitle="Give your recipe a name" />
-        <Input
-          className="input"
-          placeholder="Recipe name"
-          {...register("title", { required: true })}
-        />
-        {errors.title && <span>This field is required</span>}
+        <div className="flex flex-col gap-3">
+          <Heading title="Name" subtitle="Give your recipe a name" />
+          <Input
+            className="input"
+            placeholder="Recipe name"
+            {...register("title", { required: true })}
+          />
+          {errors.title && <span>This field is required</span>}
 
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <Input
-              className="input w-[60px]"
-              placeholder="Qnt."
-              value={quantity}
-              onChange={(event) => setQuantity(event.target.value)}
-            />
-            <select
-              className="input h-[48px] w-[80px] rounded-md border border-gray-300"
-              value={measurement}
-              onChange={(event) => setMeasurement(event.target.value)}
-            >
-              <option value="grams">gr</option>
-              <option value="tbs">tbs</option>
-              <option value="tsp">tsp</option>
-              <option value="ml">ml</option>
-            </select>
-            <Input
-              className="input"
-              placeholder="Add ingredient"
-              value={ingredient}
-              onChange={(event) => setIngredient(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && event.currentTarget.value) {
-                  handleAddIngredient(event.currentTarget.value);
-                  event.currentTarget.value = "";
-                }
-              }}
-            />
-            <Button
-              className="button h-[48px] w-[60px]"
-              variant="outline"
-              onClick={() => handleAddIngredient(ingredient)}
-            >
-              Add
-            </Button>
-          </div>
-          {fields.map((field, index) => (
-            <div
-              key={field.id}
-              className="flex items-center justify-between gap-2"
-            >
-              <div>{`${field.quantity} ${field.measurement} ${field.name}`}</div>
-              <button
-                onClick={() => {
-                  remove(index);
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <Input
+                className="input w-[60px]"
+                placeholder="Qnt."
+                value={quantity}
+                onChange={(event) => setQuantity(event.target.value)}
+              />
+              <select
+                className="input h-[48px] w-[80px] rounded-md border border-gray-300"
+                value={measurement}
+                onChange={(event) => setMeasurement(event.target.value)}
+              >
+                <option value="grams">gr</option>
+                <option value="tbs">tbs</option>
+                <option value="tsp">tsp</option>
+                <option value="ml">ml</option>
+              </select>
+              <Input
+                className="input"
+                placeholder="Add ingredient"
+                value={ingredient}
+                onChange={(event) => setIngredient(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && event.currentTarget.value) {
+                    event.preventDefault();
+                    handleAddIngredient(event.currentTarget.value);
+                    event.currentTarget.value = "";
+                  }
+                }}
+              />
+              <Button
+                className="button h-[48px] w-[60px]"
+                variant="outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAddIngredient(ingredient);
                 }}
               >
-                Remove
-              </button>
+                Add
+              </Button>
             </div>
-          ))}
+            {fields.map((field, index) => (
+              <div
+                key={field.id}
+                className="flex items-center justify-between gap-2"
+              >
+                <div>{`${field.quantity} ${field.measurement} ${field.name}`}</div>
+                <button
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <Heading title="Recipe info" subtitle="Add additional information" />
-        <Counter
-          title="Servings"
-          subtitle="Number of servings"
-          value={watch("servingsCount")}
-          onChange={(value) => setValue("servingsCount", value)}
-        />
-        <Counter
-          title="Cook time"
-          subtitle="Time to cook in minutes"
-          value={watch("cookTime")}
-          onChange={(value) => setValue("cookTime", value)}
-        />
-        <Counter
-          title="Calories"
-          subtitle="Number of calories per serving"
-          value={watch("calories")}
-          valueIncrement={10}
-          onChange={(value) => setValue("calories", value)}
-        />
-
-        <Heading
-          title="Recipe description"
-          subtitle="Add a description for your recipe"
-        />
-        <Controller
-          name="description"
-          control={control}
-          rules={{ required: "Description is required" }}
-          render={({ field }) => (
-            <Textarea className="h-[200px] resize-none" {...field} />
-          )}
-        />
-        {errors.description && <span>{errors.description.message}</span>}
-
-        <Heading title="Add images" subtitle="Add images for your recipe" />
-        <UploadButton
-          endpoint="imageUploader"
-          onClientUploadComplete={(res) => {
-            console.log("Files: ", res);
-            setImageUrl(res[0].url);
-            setValue("imageSrc", res[0].url);
-          }}
-          onUploadError={(error: Error) => {
-            alert(`ERROR! ${error.message}`);
-          }}
-        />
-        {imageUrl && (
-          <Image
-            className="mx-auto"
-            alt="Image"
-            src={imageUrl}
-            width={500}
-            height={500}
-            style={{ objectFit: "cover" }}
+        <div className="flex flex-col gap-4 pr-4">
+          <Heading title="Recipe info" subtitle="Add additional information" />
+          <Counter
+            title="Servings"
+            subtitle="Number of servings"
+            value={watch("servingsCount")}
+            onChange={(value) => setValue("servingsCount", value)}
           />
-        )}
+          <Counter
+            title="Cook time"
+            subtitle="Time to cook in minutes"
+            value={watch("cookTime")}
+            onChange={(value) => setValue("cookTime", value)}
+          />
+          <Counter
+            title="Calories"
+            subtitle="Number of calories per serving"
+            value={watch("calories")}
+            valueIncrement={10}
+            onChange={(value) => setValue("calories", value)}
+          />
+        </div>
 
-        <button type="submit">Update Recipe</button>
+        <div>
+          <Heading title="Recipe description" />
+          <Controller
+            name="description"
+            control={control}
+            rules={{ required: "Description is required" }}
+            render={({ field }) => (
+              <Textarea className="h-[220px] resize-none" {...field} />
+            )}
+          />
+          {errors.description && <span>{errors.description.message}</span>}
+        </div>
+
+        <div className="col-span-2 mt-6 flex flex-col items-center">
+          <Heading
+            title="Image"
+            subtitle="You can change the image for your recipe"
+          />
+          <UploadButton
+            className="mt-6"
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              console.log("Files: ", res);
+              const uniqueImageUrl = `${res[0].url}?t=${new Date().getTime()}`;
+              setImageUrl(uniqueImageUrl);
+              setValue("imageSrc", uniqueImageUrl);
+            }}
+            onUploadError={(error: Error) => {
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+          {imageUrl && (
+            <Image
+              className="mx-auto"
+              alt="Image"
+              src={imageUrl}
+              width={300}
+              height={300}
+              style={{ objectFit: "cover" }}
+            />
+          )}
+        </div>
+
+        <div className="col-span-2 flex justify-center">
+          <Button type="submit" className="mt-3 w-4/5">
+            Update Recipe
+          </Button>
+        </div>
       </div>
     </form>
   );
