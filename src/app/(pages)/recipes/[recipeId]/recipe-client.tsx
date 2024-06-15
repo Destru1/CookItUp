@@ -16,12 +16,15 @@ interface RecipeClientProps {
 
 const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
   const category = useMemo(() => {
-    return categories.filter((item) => item.label === recipe.category.find((cat) => cat === item.label));
+    return categories.filter(
+      (item) =>
+        item.label === recipe.category.find((cat) => cat === item.label),
+    );
   }, [categories, recipe.category]);
   console.log(category);
   return (
     <Container>
-      <div className="mx-auto mt-3 max-w-screen-lg">
+      <div className="mx-auto max-w-screen-lg pb-10 pt-4">
         <div className="flex flex-col gap-6">
           <RecipeHead
             id={recipe.id}
