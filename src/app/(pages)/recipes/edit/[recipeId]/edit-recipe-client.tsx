@@ -14,6 +14,7 @@ import CategoryInput from "~/components/category-input";
 import { categories } from "~/data/categories";
 import { UploadButton } from "~/utils/uploadthing";
 import Image from "next/image";
+import { IoMdTrash } from "react-icons/io";
 
 interface EditRecipeClientProps {
   recipe: SafeRecipe;
@@ -121,7 +122,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-4">
-      <div className="flex flex-col gap-6 md:grid grid-cols-2 ">
+      <div className="flex grid-cols-2 flex-col gap-6 md:grid ">
         <div className="flex flex-col gap-2 pr-2">
           <Heading
             title="Categories"
@@ -158,7 +159,10 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <Heading title="Name" subtitle="Give your recipe a name" />
+          <Heading
+            title="Name and ingredients"
+            subtitle="Name of your recipe and your ingredients"
+          />
           <Input
             className="input"
             placeholder="Recipe name"
@@ -219,7 +223,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
                     remove(index);
                   }}
                 >
-                  Remove
+                  <IoMdTrash size={20} />
                 </button>
               </div>
             ))}
@@ -227,7 +231,10 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
         </div>
 
         <div className="flex flex-col gap-4 pr-4">
-          <Heading title="Recipe info" subtitle="Add additional information" />
+          <Heading
+            title="Recipe info"
+            subtitle="Additional information for your recipe"
+          />
           <Counter
             title="Servings"
             subtitle="Number of servings"
@@ -250,13 +257,16 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
         </div>
 
         <div>
-          <Heading title="Recipe description" />
+          <Heading
+            title="Recipe description"
+            subtitle="Describe steb by step your recipe"
+          />
           <Controller
             name="description"
             control={control}
             rules={{ required: "Description is required" }}
             render={({ field }) => (
-              <Textarea className="h-[220px] resize-none" {...field} />
+              <Textarea className="mt-4 h-[200px] resize-none" {...field} />
             )}
           />
           {errors.description && <span>{errors.description.message}</span>}
