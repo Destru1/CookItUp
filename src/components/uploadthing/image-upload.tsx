@@ -25,6 +25,7 @@ const ImageUpload: React.FC<ImageUploaderProps> = ({ setCustomValue }) => {
       />
       {imageUrl && (
         <Image
+        className="mx-auto"
           alt="Image"
           src={imageUrl}
           width={500}

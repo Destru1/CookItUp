@@ -4,13 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SafeRecipe, SafeUser } from "~/app/types";
-import {
-  Controller,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-  useFieldArray,
-} from "react-hook-form";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Heading from "~/components/heading";
 import { Textarea } from "~/components/ui/textarea";
 import Counter from "~/components/counter";
@@ -18,7 +12,8 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import CategoryInput from "~/components/category-input";
 import { categories } from "~/data/categories";
-import ImageUpload from "~/components/uploadthing/image-upload";
+import { UploadButton } from "~/utils/uploadthing";
+import Image from "next/image";
 
 interface EditRecipeClientProps {
   recipe: SafeRecipe;
@@ -27,10 +22,10 @@ interface EditRecipeClientProps {
 
 const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState("");
   const [measurement, setMeasurement] = useState("gr");
   const [ingredient, setIngredient] = useState("");
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const {
     register,
@@ -74,6 +69,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
           reset(recipeData); // Populate the form with fetched data
           setValue("description", recipeData.content);
           setValue("servingsCount", recipeData.servings);
+          setImageUrl(recipeData.imageUrl);
 
           console.log(recipeData);
           let ingredientsData = recipeData.ingredients;
@@ -124,7 +120,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="py-4">
       <div className="flex flex-col gap-4">
         <Heading
           title="Pick a category"
@@ -256,7 +252,27 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
         {errors.description && <span>{errors.description.message}</span>}
 
         <Heading title="Add images" subtitle="Add images for your recipe" />
-        <ImageUpload setCustomValue={setValue} />
+        <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            console.log("Files: ", res);
+            setImageUrl(res[0].url);
+            setValue("imageSrc", res[0].url);
+          }}
+          onUploadError={(error: Error) => {
+            alert(`ERROR! ${error.message}`);
+          }}
+        />
+        {imageUrl && (
+          <Image
+            className="mx-auto"
+            alt="Image"
+            src={imageUrl}
+            width={500}
+            height={500}
+            style={{ objectFit: "cover" }}
+          />
+        )}
 
         <button type="submit">Update Recipe</button>
       </div>

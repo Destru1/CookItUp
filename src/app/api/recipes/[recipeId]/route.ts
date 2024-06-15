@@ -43,7 +43,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     calories,
     cookTime,
     description,
-    imageUrl,
+    imageSrc,
   } = body;
 
   const recipe = await db.recipe.update({
@@ -58,7 +58,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       calories,
       cookTime,
       content: description,
-      imageUrl,
+      imageUrl : imageSrc,
     },
   });
   return NextResponse.json(recipe);
