@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "./avatar";
 import MenuItem from "./menu-item";
@@ -8,11 +8,13 @@ import useLoginModal from "~/app/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
+import useIngredientsModal from "~/app/hooks/useIngredientsModal";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const ingredientsModal = useIngredientsModal();
   const menuRef = useRef(null);
   const user = useCurrentUser();
   const router = useRouter();
@@ -57,6 +59,10 @@ const UserMenu = () => {
                 <MenuItem
                   label="Profile"
                   onClick={() => console.log("profile")}
+                />
+                <MenuItem
+                  label="What to eat"
+                  onClick={() => ingredientsModal.onOpen()}
                 />
                 <MenuItem
                   label="My recipes"

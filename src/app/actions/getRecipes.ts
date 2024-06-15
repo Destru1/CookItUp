@@ -13,19 +13,21 @@ export default async function getRecipes(params: IRecipesParams) {
 
     const categories = params.category ? params.category.split(",") : [];
     const title = params.title || "";
-    const ingredients = params.ingredients || "";
+    const ingredients = params.ingredients ? params.ingredients.split("&") : [];
     const userId = params.userId || "";
     let query: any = {};
 
     if (title) {
       query.title = { contains: title, mode: "insensitive" };
     }
-    if (ingredients) {
-      query.ingredients = {
-        some: {
-          name: { contains: ingredients, mode: "insensitive" },
+
+    if (ingredients.length > 0) {
+      query.AND = ingredients.map((ingredient) => ({
+        ingredients: {
+          contains: ingredient.trim(),
+          mode: "insensitive",
         },
-      };
+      }));
     }
     if (categories.length > 0) {
       query.category = { hasSome: categories };

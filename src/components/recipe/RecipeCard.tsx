@@ -26,7 +26,7 @@ const RecipeCard = ({
   actionId = "",
   disabled,
   editLabel,
-  onEdit
+  onEdit,
 }: RecipeCardProps) => {
   const router = useRouter();
 
@@ -49,7 +49,7 @@ const RecipeCard = ({
         console.log("disabled");
         return;
       }
-   
+
       onEdit?.(actionId);
     },
     [onEdit, actionId, disabled],
@@ -60,7 +60,7 @@ const RecipeCard = ({
       <div
         onClick={() => router.push(`/recipes/${data.id}`)}
         key={data.id}
-        className="group col-span-1 cursor-pointer rounded-lg shadow-lg"
+        className="group col-span-1 cursor-pointer rounded-lg"
       >
         <div className="flex w-full flex-col gap-2">
           <div className="relative aspect-square w-full overflow-hidden rounded-xl">
@@ -73,7 +73,7 @@ const RecipeCard = ({
             <div className="absolute right-3 top-3">
               <HeartButton recipeId={data.id} currentUser={currentUser} />
             </div>
-            <div className="absolute bottom-1 left-2 flex gap-1">
+            <div className="absolute bottom-2 left-2 flex gap-1">
               <Badge variant="default">
                 <div className="flex items-center gap-1">
                   <FaRegClock size={14} />
