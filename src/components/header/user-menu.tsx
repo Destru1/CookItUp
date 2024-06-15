@@ -58,26 +58,50 @@ const UserMenu = () => {
               <>
                 <MenuItem
                   label="Profile"
-                  onClick={() => console.log("profile")}
+                  onClick={() => {
+                    console.log("profile");
+                    setIsOpen(false);
+                  }}
                 />
                 <MenuItem
                   label="What to eat"
-                  onClick={() => ingredientsModal.onOpen()}
+                  onClick={() => {
+                    ingredientsModal.onOpen();
+                    setIsOpen(false);
+                  }}
                 />
                 <MenuItem
                   label="My recipes"
-                  onClick={() => router.push("/my-recipes")}
+                  onClick={() => {
+                    router.push("/my-recipes");
+                    setIsOpen(false);
+                  }}
                 />
                 <MenuItem
                   label="Favourites"
-                  onClick={() => router.push("/favourites")}
+                  onClick={() => {
+                    router.push("/favourites");
+                    setIsOpen(false);
+                  }}
                 />
                 <MenuItem label="Logout" onClick={handleSignOut} />
               </>
             ) : (
               <>
-                <MenuItem label="Login" onClick={loginModal.onOpen} />
-                <MenuItem label="Register" onClick={registerModal.onOpen} />
+                <MenuItem
+                  label="Login"
+                  onClick={() => {
+                    loginModal.onOpen();
+                    setIsOpen(false);
+                  }}
+                />
+                <MenuItem
+                  label="Register"
+                  onClick={() => {
+                    registerModal.onOpen();
+                    setIsOpen(false);
+                  }}
+                />
               </>
             )}
           </div>
