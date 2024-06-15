@@ -51,11 +51,11 @@ export async function POST(request: Request) {
     title,
     category,
     ingredients,
-    servingsCount,
+    servings,
     calories,
     cookTime,
-    description,
-    imageSrc,
+    content,
+    imageUrl,
   } = body;
 
   Object.keys(body).forEach((key) => {
@@ -70,11 +70,11 @@ export async function POST(request: Request) {
       title,
       category,
       ingredients: JSON.stringify(ingredients),
-      servings: servingsCount,
+      servings,
       calories,
       cookTime,
-      content: description,
-      imageUrl: imageSrc,
+      content,
+      imageUrl,
       userId: currentUser.id,
     },
   });

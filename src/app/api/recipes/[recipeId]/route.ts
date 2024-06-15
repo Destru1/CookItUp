@@ -53,7 +53,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     data: {
       title,
       category,
-      ingredients,
+      ingredients: JSON.stringify(ingredients),
       servings: servingsCount,
       calories,
       cookTime,

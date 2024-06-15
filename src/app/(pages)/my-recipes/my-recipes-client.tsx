@@ -41,6 +41,7 @@ const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
   );
   const onEdit = useCallback((id: string) => {
     setEditId(id);
+    router.push(`/recipes/edit/${id}`);
 
     //TODO Implement edit
   }, []);

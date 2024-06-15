@@ -23,7 +23,7 @@ const Counter = ({
   }, [onChange, value]);
 
   const onReduce = useCallback(() => {
-    if (value == valueIncrement) {
+    if (value <= valueIncrement) {
       return;
     }
     onChange(value - valueIncrement);
