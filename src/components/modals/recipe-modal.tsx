@@ -21,6 +21,7 @@ import Counter from "../counter";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../uploadthing/image-upload";
 import { useRouter } from "next/navigation";
+import { IoMdTrash } from "react-icons/io";
 
 enum STEPS {
   CATEGORY = 0,
@@ -237,7 +238,7 @@ const RecipeModal = () => {
                 }}
               >
                 {/* TODO add remove icon */}
-                Remove
+                <IoMdTrash size={24} className="mr-1" />
               </button>
             </div>
           ))}
