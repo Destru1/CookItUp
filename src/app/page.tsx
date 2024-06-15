@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import getRecipes, { IRecipesParams } from "./actions/getRecipes";
 import getCurrentUser from "./actions/getCurrentUser";
+import EmptyState from "~/components/empty-state";
 
 interface HomePageProps {
   searchParams: IRecipesParams;
@@ -21,7 +22,16 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const recipes = await getRecipes(searchParams);
   const currentUser = await getCurrentUser();
   console.log(recipes);
-  //const recipes = await getRecipes()
+
+  if (recipes.length === 0) {
+    return (
+      <ClientOnly>
+        <Categories />
+        <EmptyState showReset />
+      </ClientOnly>
+    );
+  }
+
   return (
     <ClientOnly>
       <Categories />
