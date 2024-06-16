@@ -114,6 +114,7 @@ const RecipeModal = () => {
     console.log(data);
   };
   const handleAddIngredient = (newIngredient: string) => {
+    if (!newIngredient) return;
     setIngredients([
       ...ingredients,
       { quantity, measurement, name: newIngredient },
@@ -223,27 +224,22 @@ const RecipeModal = () => {
               Add
             </Button>
           </div>
-          <ul className="flex flex-col gap-2 max-h-[400px] overflow-auto">
-          
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between "
-            >
-              <div>{`${ingredient.quantity} ${ingredient.measurement} ${ingredient.name}`}</div>
-              <button
-                onClick={() => {
-                  const newIngredients = [...ingredients];
-                  newIngredients.splice(index, 1);
-                  setIngredients(newIngredients);
-                  remove(index);
-                }}
-              >
-               
-                <IoMdTrash size={24} className="mr-1" />
-              </button>
-            </li>
-          ))}
+          <ul className="flex max-h-[400px] flex-col gap-2 overflow-auto">
+            {ingredients.map((ingredient, index) => (
+              <li key={index} className="flex items-center justify-between ">
+                <div>{`${ingredient.quantity} ${ingredient.measurement} ${ingredient.name}`}</div>
+                <button
+                  onClick={() => {
+                    const newIngredients = [...ingredients];
+                    newIngredients.splice(index, 1);
+                    setIngredients(newIngredients);
+                    remove(index);
+                  }}
+                >
+                  <IoMdTrash size={24} className="mr-1" />
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
