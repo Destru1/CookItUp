@@ -34,8 +34,8 @@ const RecipeInfo = ({
   return (
     <div className="flex flex-col items-start lg:flex-row">
       <div className="order-2 col-span-2 mr-4 flex w-full shrink-0 flex-col gap-6 lg:w-2/3">
-        <div className="flex flex-col gap-2">
-          <ul className="flex items-center gap-6 font-light text-neutral-800">
+        <div className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap items-center gap-6 font-light text-neutral-800">
             <li className="flex items-center gap-1">
               <FaRegClock size={20} /> {cookTime} m.
             </li>
@@ -74,7 +74,7 @@ const RecipeInfo = ({
           <div>{description}</div>
         </div>
       </div>
-      <div className="order-1 mb-3 w-full lg:order-3">
+      <div className="order-1 mb-5 w-full lg:order-3 lg:mb-0">
         <h3 className="text-md mb-3 flex items-center text-center font-semibold">
           <FaList size={20} className="mr-2" />
           Ingredients

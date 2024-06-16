@@ -39,7 +39,7 @@ const UserMenu = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative z-20" ref={menuRef}>
       <div className="flex items-center">
         <div
           onClick={toggleOpen}

@@ -24,9 +24,9 @@ export default function Header() {
   }, [user, loginModal, recipeModal]);
 
   return (
-    <header className="w-full bg-white shadow">
+    <header className="w-full bg-white shadow ">
       <Container>
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-4 gap-3">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
@@ -34,9 +34,9 @@ export default function Header() {
                 src={"/logo.png"}
                 width={50}
                 height={50}
-                className="object-cover"
+                className="object-cover shrink-0"
               />
-              <h3>CookItUp</h3>
+              <h3 className="hidden md:block">CookItUp</h3>
             </Link>
           </div>
           <Search />

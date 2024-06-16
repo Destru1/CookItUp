@@ -223,10 +223,12 @@ const RecipeModal = () => {
               Add
             </Button>
           </div>
+          <ul className="flex flex-col gap-2 max-h-[400px] overflow-auto">
+          
           {ingredients.map((ingredient, index) => (
-            <div
+            <li
               key={index}
-              className="flex items-center justify-between gap-2"
+              className="flex items-center justify-between "
             >
               <div>{`${ingredient.quantity} ${ingredient.measurement} ${ingredient.name}`}</div>
               <button
@@ -237,11 +239,12 @@ const RecipeModal = () => {
                   remove(index);
                 }}
               >
-                {/* TODO add remove icon */}
+               
                 <IoMdTrash size={24} className="mr-1" />
               </button>
-            </div>
+            </li>
           ))}
+          </ul>
         </div>
       </div>
     );
