@@ -4,7 +4,7 @@ export const publicRoutes = [
 ]
 
 export const protectedRoutes = [
-   
+   '/test'
 ]
 
 export const apiRoutesPrefix = '/api/auth' 

@@ -11,7 +11,9 @@ export async function GET(request: Request) {
     const ingredientNames = recipes.flatMap((recipe) => {
       const ingredientsArray = JSON.parse(recipe.ingredients);
 
-      return ingredientsArray.map((ingredient) => ingredient.name);
+      return ingredientsArray.map(
+        (ingredient: { name: string }) => ingredient.name,
+      );
     });
 
     const uniqueIngredientNames = [...new Set(ingredientNames)];

@@ -16,7 +16,7 @@ const ImageUpload: React.FC<ImageUploaderProps> = ({ setCustomValue }) => {
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           console.log("Files: ", res);
-          setImageUrl(res[0].url);
+          setImageUrl(res[0]?.url || "");
           setCustomValue("imageSrc", res[0]?.url);
         }}
         onUploadError={(error: Error) => {
@@ -25,7 +25,7 @@ const ImageUpload: React.FC<ImageUploaderProps> = ({ setCustomValue }) => {
       />
       {imageUrl && (
         <Image
-        className="mx-auto"
+          className="mx-auto"
           alt="Image"
           src={imageUrl}
           width={500}
