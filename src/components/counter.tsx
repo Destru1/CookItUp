@@ -30,7 +30,7 @@ const Counter = ({
   }, [value, onChange]);
 
   const onValueChange = useCallback(
-    (event) => {
+    (event : any) => {
       const newValue = parseInt(event.target.value, 10);
       if (!isNaN(newValue)) {
         onChange(newValue);

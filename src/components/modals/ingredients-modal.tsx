@@ -12,7 +12,7 @@ const IngredientsModal = () => {
   const ingredientModal = useIngredientsModal();
   const router = useRouter();
   const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
   useEffect(() => {
     axios.get("/api/ingredients").then((res) => {
@@ -21,7 +21,7 @@ const IngredientsModal = () => {
     });
   }, []);
 
-  const handleIngredientClick = (ingredient) => {
+  const handleIngredientClick = (ingredient:string) => {
     setSelectedIngredients((prevSelected) => {
       if (prevSelected.includes(ingredient)) {
         return prevSelected.filter((item) => item !== ingredient);

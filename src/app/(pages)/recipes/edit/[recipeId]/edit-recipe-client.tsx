@@ -21,11 +21,28 @@ interface EditRecipeClientProps {
   currentUser: SafeUser | null;
 }
 
+interface Ingredient {
+  quantity: string;
+  measurement: string;
+  name: string;
+}
+
+interface FormData {
+  category: string[];
+  title: string;
+  ingredients: Ingredient[];
+  servingsCount: number;
+  calories: number;
+  cookTime: number;
+  description: string;
+  imageSrc: string;
+}
+
 const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
   const router = useRouter();
-  const [quantity, setQuantity] = useState("");
-  const [measurement, setMeasurement] = useState("gr");
-  const [ingredient, setIngredient] = useState("");
+  const [quantity, setQuantity] = useState<string>("");
+  const [measurement, setMeasurement] = useState<string>("gr");
+  const [ingredient, setIngredient] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const {
@@ -36,7 +53,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
     watch,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     defaultValues: {
       category: [],
       title: "",
@@ -84,7 +101,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
           }
 
           if (Array.isArray(ingredientsData)) {
-            ingredientsData.forEach((ingredient) => append(ingredient)); // Append ingredients
+            ingredientsData.forEach((ingredient: Ingredient) => append(ingredient)); // Append ingredients
           } else {
             console.error(
               "Expected ingredients to be an array or a stringified array",
@@ -101,7 +118,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
     }
   }, [recipe.id, currentUser, router, reset, setValue, append]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     try {
       await axios.put(`/api/recipes/${recipe.id}`, data);
       console.log("Recipe updated successfully");
@@ -111,9 +128,9 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
     }
   };
 
-  const handleAddIngredient = (newIngredient) => {
+  const handleAddIngredient = (newIngredient: string) => {
     if (!newIngredient) return;
-    const newIng = { quantity, measurement, name: newIngredient };
+    const newIng: Ingredient = { quantity, measurement, name: newIngredient };
     append(newIng);
     setQuantity("");
     setMeasurement("gr");
@@ -143,7 +160,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
                       );
                       const newValue = isAlreadySelected
                         ? field.value.filter(
-                            (category) => category !== item.label,
+                            (category: string) => category !== item.label,
                           )
                         : [...field.value, item.label];
                       field.onChange(newValue);
@@ -240,20 +257,20 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
             title="Servings"
             subtitle="Number of servings"
             value={watch("servingsCount")}
-            onChange={(value) => setValue("servingsCount", value)}
+            onChange={(value: number) => setValue("servingsCount", value)}
           />
           <Counter
             title="Cook time"
             subtitle="Time to cook in minutes"
             value={watch("cookTime")}
-            onChange={(value) => setValue("cookTime", value)}
+            onChange={(value: number) => setValue("cookTime", value)}
           />
           <Counter
             title="Calories"
             subtitle="Number of calories per serving"
             value={watch("calories")}
             valueIncrement={10}
-            onChange={(value) => setValue("calories", value)}
+            onChange={(value: number) => setValue("calories", value)}
           />
         </div>
 
@@ -283,7 +300,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               console.log("Files: ", res);
-              const uniqueImageUrl = `${res[0].url}?t=${new Date().getTime()}`;
+              const uniqueImageUrl = `${res[0]?.url}?t=${new Date().getTime()}`;
               setImageUrl(uniqueImageUrl);
               setValue("imageSrc", uniqueImageUrl);
             }}

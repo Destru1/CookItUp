@@ -17,7 +17,7 @@ const ImageUpload: React.FC<ImageUploaderProps> = ({ setCustomValue }) => {
         onClientUploadComplete={(res) => {
           console.log("Files: ", res);
           setImageUrl(res[0].url);
-          setCustomValue("imageSrc", res[0].url);
+          setCustomValue("imageSrc", res[0]?.url);
         }}
         onUploadError={(error: Error) => {
           alert(`ERROR! ${error.message}`);
