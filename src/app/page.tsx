@@ -10,7 +10,7 @@ import Categories from "~/components/categories";
 import RecipeCard from "~/components/recipe/RecipeCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import getRecipes, { IRecipesParams } from "./actions/getRecipes";
+import getRecipes, { type IRecipesParams } from "./actions/getRecipes";
 import getCurrentUser from "./actions/getCurrentUser";
 import EmptyState from "~/components/empty-state";
 

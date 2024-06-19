@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import useLoginModal from "./useLoginModal";
 import { useCallback, useMemo } from "react";
-import { SafeUser } from "../types";
+import { type SafeUser } from "../types";
 import axios from "axios";
 
 interface IUseFavourite {

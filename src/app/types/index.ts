@@ -1,4 +1,4 @@
-import { Recipe, User } from "@prisma/client";
+import { type Recipe, type User } from "@prisma/client";
 
 export type SafeRecipe = Omit<Recipe, "createdAt"> & {
   createdAt: string;

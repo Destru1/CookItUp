@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { SafeRecipe, SafeUser } from "~/app/types";
+import { type SafeRecipe, type SafeUser } from "~/app/types";
 import HeartButton from "../heart-button";
 import { Badge } from "../ui/badge";
 import { FaRegClock, FaUtensils } from "react-icons/fa";

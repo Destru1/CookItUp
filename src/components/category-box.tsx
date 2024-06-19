@@ -1,4 +1,4 @@
-import { IconType } from "react-icons/lib";
+import { type IconType } from "react-icons/lib";
 import { useCallback } from "react";
 import queryString from "query-string";
 import { useRouter, useSearchParams } from "next/navigation";

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Heading from "../heading";
 import HeartButton from "../heart-button";
-import { SafeUser } from "~/app/types";
+import { type SafeUser } from "~/app/types";
 import { IoMdPrint } from "react-icons/io";
 import { RiShareForwardFill } from "react-icons/ri";
 

@@ -15,7 +15,7 @@ export default async function getRecipes(params: IRecipesParams) {
     const title = params.title || "";
     const ingredients = params.ingredients ? params.ingredients.split("&") : [];
     const userId = params.userId || "";
-    let query: any = {};
+    const query: any = {};
 
     if (title) {
       query.title = { contains: title, mode: "insensitive" };

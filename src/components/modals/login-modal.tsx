@@ -4,7 +4,7 @@ import useRegisterModal from "~/app/hooks/useRegisterModal";
 import Heading from "../heading";
 import { Input } from "../ui/input";
 import Modal from "./modal";
-import * as z from "zod";
+import type * as z from "zod";
 import useLoginModal from "~/app/hooks/useLoginModal";
 import { useCallback, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SafeRecipe, SafeUser } from "~/app/types";
+import { type SafeRecipe, type SafeUser } from "~/app/types";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Heading from "~/components/heading";
 import { Textarea } from "~/components/ui/textarea";
@@ -27,7 +27,7 @@ interface Ingredient {
   name: string;
 }
 
-interface FormData {
+interface FormData  {
   category: string[];
   title: string;
   ingredients: Ingredient[];

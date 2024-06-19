@@ -1,6 +1,6 @@
 "use client";
 
-import { IconType } from "react-icons/lib";
+import { type IconType } from "react-icons/lib";
 
 interface RecipeCategoryProps {
   label: string;

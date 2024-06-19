@@ -18,7 +18,7 @@ export async function POST(req: Request, { params }: { params: IParams }) {
     throw new Error("Invalid recipe Id");
   }
 
-  let favouritesIds = [...(currentUser.favouriteIds || [])];
+  const favouritesIds = [...(currentUser.favouriteIds || [])];
 
   favouritesIds.push(recipeId);
 

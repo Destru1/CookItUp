@@ -1,6 +1,6 @@
 "use client";
 
-import { SafeRecipe, SafeUser } from "~/app/types";
+import { type SafeRecipe, type SafeUser } from "~/app/types";
 import Container from "~/components/container";
 import RecipeHead from "~/components/recipe/recipe-head";
 import RecipeInfo from "~/components/recipe/recipe-info";

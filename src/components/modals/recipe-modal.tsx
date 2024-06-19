@@ -9,8 +9,8 @@ import { categories } from "~/data/categories";
 import CategoryInput from "../category-input";
 import {
   Controller,
-  FieldValues,
-  SubmitHandler,
+  type FieldValues,
+  type SubmitHandler,
   useForm,
   useFieldArray,
 } from "react-hook-form";
