@@ -5,7 +5,7 @@ import RecipeCard from "~/components/recipe/RecipeCard";
 
 interface FavouritesClientProps {
   recipes: SafeRecipe[];
-  currentUser: SafeUser | null;
+  currentUser?: SafeUser | null;
 }
 const FavouritesClient = ({ recipes, currentUser }: FavouritesClientProps) => {
   return (

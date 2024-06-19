@@ -9,8 +9,8 @@ interface RecipeHeadProps {
   id: string;
   title: string;
   imageUrl: string;
-  userImg: string;
-  userName: string;
+  userImg: string | null;
+  userName: string | null;
   currentUser?: SafeUser | null;
 }
 const RecipeHead = ({
