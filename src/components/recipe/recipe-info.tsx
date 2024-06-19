@@ -61,6 +61,7 @@ const RecipeInfo = ({
             {category?.length > 0 &&
               category.map((item) => (
                 <div
+                  key={item.label}
                   onClick={() => router.push(`/?category=${item.label}`)}
                   className="cursor-pointer"
                 >
