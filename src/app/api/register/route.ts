@@ -11,8 +11,9 @@ export async function POST(request: Request) {
   const isEmailTaken = await getUserByEmail(email);
 
   if (isEmailTaken) {
-    return { error: "Email is already taken" };
+    return NextResponse.json({ error: "Email is already taken" }, { status: 400 });
   }
+
   const user = await db.user.create({
     data: {
       email,
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(user);
+  return NextResponse.json(user, { status: 201 });
 }
 
 export async function GET(req: Request) {

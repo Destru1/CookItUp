@@ -7,6 +7,7 @@ import HeartButton from "../heart-button";
 import { Badge } from "../ui/badge";
 import { FaRegClock, FaUtensils } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { FaRegStar } from "react-icons/fa";
 
 interface RecipeCardProps {
   data: SafeRecipe;
@@ -88,13 +89,22 @@ const RecipeCard = ({
               </Badge>
             </div>
           </div>
-          <div className="px-2 pb-2">
+          <div className=" pb-2">
+            <div className="text-lg font-semibold">{data.title}</div>
             <div className="font-light text-neutral-500">
               {Array.isArray(data.category)
                 ? data.category.join(", ")
                 : data.category}
             </div>
-            <div className="text-lg font-semibold">{data.title}</div>
+            <div className="flex items-center justify-between">
+              <div className="text-md text-slate-500 ">
+                {data.likeCount === 1 ? "Like " : "Likes "}
+                {data.likeCount}
+              </div>
+              <div className="flex items-center gap-1 text-slate-500">
+                <FaRegStar size={20} /> 0
+              </div>
+            </div>
           </div>
         </div>
 

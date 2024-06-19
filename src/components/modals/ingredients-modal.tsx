@@ -37,7 +37,7 @@ const IngredientsModal = () => {
   };
 
   const bodyContent = (
-    <div className="grid grid-cols-2 gap-4 pt-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7">
+    <div className="grid max-h-[400px] grid-cols-2 gap-4 overflow-auto pt-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7">
       {ingredients.map((ingredient, index) => (
         <Badge
           key={index}

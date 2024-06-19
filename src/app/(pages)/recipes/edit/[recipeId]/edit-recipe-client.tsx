@@ -187,6 +187,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
                 <option value="tbs">tbs</option>
                 <option value="tsp">tsp</option>
                 <option value="ml">ml</option>
+                <option value="qty">qty</option>
               </select>
               <Input
                 className="input"

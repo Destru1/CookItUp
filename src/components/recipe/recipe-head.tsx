@@ -3,6 +3,7 @@ import Heading from "../heading";
 import HeartButton from "../heart-button";
 import { SafeUser } from "~/app/types";
 import { IoMdPrint } from "react-icons/io";
+import { RiShareForwardFill } from "react-icons/ri";
 
 interface RecipeHeadProps {
   id: string;
@@ -50,12 +51,17 @@ const RecipeHead = ({
             </div>
           </div>
 
-          <div onClick={() => window.print()} className="cursor-pointer">
-            <IoMdPrint size={26} />
+          <div className="flex items-center gap-2">
+            <div onClick={() => window.print()} className="cursor-pointer">
+              <IoMdPrint size={26} />
+            </div>
+            <div>
+              <RiShareForwardFill size={26} />
+            </div>
           </div>
         </div>
       </div>
-      <div className="relative h-[60vh] w-full overflow-hidden rounded-xl print:h-[200px]">
+      <div className="relative h-[60vh] w-full overflow-hidden rounded-xl print:h-[0px]">
         <Image
           src={imageUrl}
           alt={title}

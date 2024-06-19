@@ -51,7 +51,7 @@ model Recipe {
     title       String
     content     String
     servings    Int
-    cookTime    Int // Time in minutes
+    cookTime    Int 
     calories    Int
     likeCount   Int?      @default(0)
     imageUrl    String
@@ -71,6 +71,7 @@ model Comment {
     content   String
     userId    String
     recipeId  String
+    rating    Int
     user      User     @relation(fields: [userId], references: [id])
     recipe    Recipe   @relation(fields: [recipeId], references: [id])
     createdAt DateTime @default(now())

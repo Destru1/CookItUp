@@ -9,6 +9,7 @@ import {
   FaFileAlt,
 } from "react-icons/fa";
 import RecipeCategory from "./recipe-category";
+import { useRouter } from "next/navigation";
 
 interface RecipeInfoProps {
   description: string;
@@ -31,9 +32,10 @@ const RecipeInfo = ({
   category,
 }: RecipeInfoProps) => {
   const caloriesPerServing = Math.round(calories / servings);
+  const router = useRouter();
   return (
     <div className="flex flex-col items-start lg:flex-row">
-      <div className="order-2 col-span-2 mr-4 flex w-full shrink-0 flex-col gap-6 lg:w-2/3">
+      <div className="order-2 col-span-2 flex w-full shrink-0 flex-col gap-6 pr-6 lg:w-2/3">
         <div className="flex flex-wrap gap-2">
           <ul className="flex flex-wrap items-center gap-6 font-light text-neutral-800">
             <li className="flex items-center gap-1">
@@ -47,9 +49,9 @@ const RecipeInfo = ({
               <FaFire size={20} />
               {calories} kcal
             </li>
-            <li className="text-neutral-500">
+            {/* <li className="text-neutral-500">
               Calories per serving: {caloriesPerServing}
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="flex flex-col gap-y-2">
@@ -58,11 +60,16 @@ const RecipeInfo = ({
           <div className="flex items-center gap-6">
             {category?.length > 0 &&
               category.map((item) => (
-                <RecipeCategory
-                  key={item.label}
-                  label={item.label}
-                  icon={item.icon}
-                />
+                <div
+                  onClick={() => router.push(`/?category=${item.label}`)}
+                  className="cursor-pointer"
+                >
+                  <RecipeCategory
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                  />
+                </div>
               ))}
           </div>
         </div>

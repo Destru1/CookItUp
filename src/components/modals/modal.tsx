@@ -70,10 +70,11 @@ const Modal = ({
   items-center
   justify-center
   overflow-y-auto
-  overflow-x-hidden
+  overflow-x-auto
   bg-neutral-800/70
   outline-none
-  focus:outline-none"
+  focus:outline-none
+  md:items-center md:overflow-x-hidden"
       >
         <div
           className={`relative mx-auto my-6 h-fit w-full px-3 md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5 ${large ? "xl:w-[90%]" : "xl:w-2/5"}`}

@@ -8,7 +8,7 @@ import useRecipeModal from "~/app/hooks/useRecipeModal";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 import { useCallback } from "react";
 import Image from "next/image";
-
+import { FaPlus } from "react-icons/fa";
 export default function Header() {
   const loginModal = useLoginModal();
   const recipeModal = useRecipeModal();
@@ -26,7 +26,7 @@ export default function Header() {
   return (
     <header className="w-full bg-white shadow ">
       <Container>
-        <div className="flex items-center justify-between py-4 gap-3">
+        <div className="flex items-center justify-between gap-3 py-4">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
@@ -34,7 +34,7 @@ export default function Header() {
                 src={"/logo.png"}
                 width={50}
                 height={50}
-                className="object-cover shrink-0"
+                className="shrink-0 object-cover"
               />
               <h3 className="hidden md:block">CookItUp</h3>
             </Link>
@@ -48,6 +48,14 @@ export default function Header() {
             onClick={onRecipe}
           >
             Create recipe
+          </div>
+        </div>
+        <div
+          className="fixed bottom-5 right-5 z-40 flex h-12 items-center justify-center md:hidden"
+          onClick={onRecipe}
+        >
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 text-white">
+            <FaPlus size={20} />
           </div>
         </div>
       </Container>
