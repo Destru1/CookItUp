@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Heading from "../heading";
 import { Textarea } from "../ui/textarea";
 import Rating from "react-rating-stars-component";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useCurrentUser } from "~/app/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
 
 interface RecipeCommentProps {
   recipeId: string;
@@ -13,6 +15,31 @@ interface RecipeCommentProps {
 const RecipeComment = ({ recipeId }: RecipeCommentProps) => {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(3);
+  const [commentId, setCommentId] = useState(null);
+  const router = useRouter();
+  const currentUser = useCurrentUser();
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        const response = await axios.get(`/api/comment`, {
+          params: { recipeId },
+        });
+        const existingComment = response.data.find(
+          (comment) => comment.userId === currentUser?.id,
+        );
+        if (existingComment) {
+          setContent(existingComment.content);
+          setRating(existingComment.rating);
+          setCommentId(existingComment.id);
+        }
+      } catch (error) {
+        console.error("Failed to fetch comments", error);
+      }
+    };
+
+    fetchComment();
+  }, [recipeId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,14 +50,27 @@ const RecipeComment = ({ recipeId }: RecipeCommentProps) => {
     setRating(newRating);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit comment and rating here. For example, call an API to save the comment and rating
-    axios.post("/api/comment", { content, rating, recipeId });
-    console.log({ content, rating, recipeId });
-    // Reset form
-    setContent("");
-    setRating(0);
+    try {
+      if (commentId) {
+        await axios.put(`/api/comment`, {
+          commentId,
+          content,
+          rating,
+        });
+        router.push("/");
+      } else {
+        await axios.post("/api/comment", { content, rating, recipeId });
+        router.push("/");
+      }
+
+      setContent("");
+      setRating(0);
+      setCommentId(null);
+    } catch (error) {
+      console.error("Failed to submit comment", error);
+    }
   };
 
   return (
@@ -60,7 +100,7 @@ const RecipeComment = ({ recipeId }: RecipeCommentProps) => {
           </div>
         </div>
         <Button type="submit" className="m-auto mt-4 ">
-          Submit Comment
+          {commentId ? "Update Comment" : "Submit Comment"}
         </Button>
       </form>
     </div>

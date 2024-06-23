@@ -79,3 +79,59 @@ export async function GET(request: Request) {
     );
   }
 }
+
+export async function PUT(request: Request) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return NextResponse.error();
+  }
+
+  const body = await request.json();
+  const { commentId, content, rating, recipeId } = body;
+  
+
+  if (!commentId || typeof commentId !== "string") {
+    return NextResponse.json({ error: "Invalid comment ID" }, { status: 400 });
+  }
+
+  try {
+    const existingComment = await db.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!existingComment) {
+      return NextResponse.json({ error: "Comment not found" }, { status: 404 });
+    }
+
+    if (existingComment.userId !== currentUser.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const updatedComment = await db.comment.update({
+      where: { id: commentId },
+      data: { content, rating },
+    });
+
+    const ratingDifference = rating - existingComment.rating;
+
+    const recipe = await db.recipe.update({
+      where: {
+        id: updatedComment.recipeId,
+      },
+      data: {
+        totalRating: ratingDifference > 0 ? 
+          { increment: ratingDifference } : 
+          { decrement: Math.abs(ratingDifference) },
+      },
+    });
+
+    return NextResponse.json(updatedComment, { status: 200 });
+  } catch (error) {
+    console.error("Failed to update comment:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
+  }
+}

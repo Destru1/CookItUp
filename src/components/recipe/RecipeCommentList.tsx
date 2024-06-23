@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SafeComment } from "~/app/types";
 import Heading from "../heading";
 import { FaRegStar } from "react-icons/fa";
+import { formatDate } from "~/helpers/formatDate";
 
 interface RecipeCommentListProps {
   comments: SafeComment[];
@@ -32,7 +33,9 @@ const RecipeCommentList = ({ comments }: RecipeCommentListProps) => {
                         {comment.user.name}
                       </h4>
                     </div>
-                    <p>{comment.createdAt}</p>
+                    <p className="text-sm font-light text-slate-400">
+                      {formatDate(comment.updatedAt ?? comment.createdAt)}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2">
                     <p className="text-sm text-gray-500">{comment.content}</p>
