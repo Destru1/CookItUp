@@ -102,7 +102,7 @@ const RecipeCard = ({
                 {data.likeCount}
               </div>
               <div className="flex items-center gap-1 text-slate-500">
-                <FaRegStar size={20} /> 0
+                <FaRegStar size={20} /> {data.totalRating && data.timesRated ? data.totalRating / data.timesRated : 0}
               </div>
             </div>
           </div>

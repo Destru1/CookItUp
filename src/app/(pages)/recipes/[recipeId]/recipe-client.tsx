@@ -1,27 +1,51 @@
 "use client";
 
-import { type SafeRecipe, type SafeUser } from "~/app/types";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { SafeRecipe, SafeUser,SafeComment } from "~/app/types";
 import Container from "~/components/container";
 import RecipeHead from "~/components/recipe/recipe-head";
 import RecipeInfo from "~/components/recipe/recipe-info";
 import { useMemo } from "react";
 import { categories } from "~/data/categories";
+import RecipeComment from "~/components/recipe/RecipeComment";
+import RecipeCommentList from "~/components/recipe/RecipeCommentList";
 
 interface RecipeClientProps {
   recipe: SafeRecipe & {
-    user: SafeUser;
+    user: SafeUser
+    comments: SafeComment[];
   };
   currentUser?: SafeUser | null;
 }
 
 const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
+  const [comments, setComments] = useState<[]>([]);
+
   const category = useMemo(() => {
     return categories.filter(
       (item) =>
         item.label === recipe.category.find((cat) => cat === item.label),
     );
   }, [categories, recipe.category]);
-  console.log(category);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`/api/comment`, {
+          params: {
+            recipeId: recipe.id,
+          },
+        });
+        setComments(response.data);
+      } catch (error) {
+        console.error("Failed to fetch comments", error);
+      }
+    };
+
+    fetchComments();
+  }, [recipe.id]);
+
   return (
     <Container>
       <div className="mx-auto max-w-screen-lg pb-10 pt-4">
@@ -45,6 +69,8 @@ const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
             />
           </div>
         </div>
+        <RecipeCommentList comments={comments} />
+        <RecipeComment recipeId={recipe.id} />
       </div>
     </Container>
   );

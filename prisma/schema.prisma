@@ -51,7 +51,7 @@ model Recipe {
     title       String
     content     String
     servings    Int
-    cookTime    Int 
+    cookTime    Int
     calories    Int
     likeCount   Int?      @default(0)
     imageUrl    String
@@ -59,6 +59,8 @@ model Recipe {
     ingredients String    @default("[]")
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
+    timesRated  Int?      @default(0)
+    totalRating Int?      @default(0)
     userId      String
     comments    Comment[]
     user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
