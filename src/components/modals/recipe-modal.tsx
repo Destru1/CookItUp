@@ -100,6 +100,7 @@ const RecipeModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.IMAGES) {
+      console.log(data);
       return onNext();
     }
     setIsLoading(true);
@@ -204,7 +205,10 @@ const RecipeModal = () => {
               placeholder="Add ingredient"
               onKeyDown={(event) => {
                 if (event.key === "Enter" && event.currentTarget.value) {
-                  handleAddIngredient(event.currentTarget.value);
+                  handleAddIngredient(ingredient);
+                  setIngredient("");
+                  console.log(ingredients);
+                  append({ quantity, measurement, name: ingredient });
                   event.currentTarget.value = "";
                 }
               }}
