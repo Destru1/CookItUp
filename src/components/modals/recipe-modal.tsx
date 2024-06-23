@@ -48,6 +48,7 @@ const RecipeModal = () => {
     register,
     handleSubmit,
     setValue,
+    setError,
     watch,
     control,
     formState: { errors },
@@ -64,8 +65,6 @@ const RecipeModal = () => {
       imageSrc: "",
     },
   });
-
-  //const category = watch("category");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -95,12 +94,23 @@ const RecipeModal = () => {
     if (step == STEPS.CATEGORY) {
       return undefined;
     }
+    console.log(step);
     return "Back";
   }, [step]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(step);
+    if (step === STEPS.CATEGORY && data.category.length === 0) {
+      setError("category", {
+        type: "manual",
+        message: "Please select at least one category",
+      });
+      return;
+    }
+
+   
+
     if (step !== STEPS.IMAGES) {
-      console.log(data);
       return onNext();
     }
     setIsLoading(true);
@@ -114,6 +124,7 @@ const RecipeModal = () => {
     });
     console.log(data);
   };
+
   const handleAddIngredient = (newIngredient: string) => {
     if (!newIngredient) return;
     setIngredients([
@@ -168,8 +179,14 @@ const RecipeModal = () => {
           />
         ))}
       </div>
+      {errors.category && (
+        <span className="text-red-500">
+          {errors.category.message as string}
+        </span>
+      )}
     </div>
   );
+
   if (step == STEPS.NAME) {
     bodyContent = (
       <div className="flex flex-col gap-4">
@@ -177,8 +194,11 @@ const RecipeModal = () => {
         <Input
           className="input"
           placeholder="Recipe name"
-          {...register("title", { required: true })}
+          {...register("title", { required: "Recipe name is required" })}
         />
+        {errors.title && (
+          <span className="text-red-500">{errors.title.message as string}</span>
+        )}
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <Input
@@ -207,7 +227,6 @@ const RecipeModal = () => {
                 if (event.key === "Enter" && event.currentTarget.value) {
                   handleAddIngredient(ingredient);
                   setIngredient("");
-                  console.log(ingredients);
                   append({ quantity, measurement, name: ingredient });
                   event.currentTarget.value = "";
                 }
@@ -222,7 +241,6 @@ const RecipeModal = () => {
               onClick={() => {
                 handleAddIngredient(ingredient);
                 setIngredient("");
-                console.log(ingredients);
                 append({ quantity, measurement, name: ingredient });
               }}
             >
@@ -264,6 +282,11 @@ const RecipeModal = () => {
             setCustomValue("servingsCount", value);
           }}
         />
+        {errors.servingsCount && (
+          <span className="text-red-500">
+            {errors.servingsCount.message as string}
+          </span>
+        )}
         <Counter
           title="Cook time"
           subtitle="Time to cook in minutes"
@@ -272,6 +295,11 @@ const RecipeModal = () => {
             setCustomValue("cookTime", value);
           }}
         />
+        {errors.cookTime && (
+          <span className="text-red-500">
+            {errors.cookTime.message as string}
+          </span>
+        )}
         <Counter
           title="Calories"
           subtitle="Number of calories per serving"
@@ -281,6 +309,11 @@ const RecipeModal = () => {
             setCustomValue("calories", value);
           }}
         />
+        {errors.calories && (
+          <span className="text-red-500">
+            {errors.calories.message as string}
+          </span>
+        )}
       </div>
     );
   }
@@ -306,6 +339,11 @@ const RecipeModal = () => {
             />
           )}
         />
+        {errors.description && (
+          <span className="text-red-500">
+            {errors.description.message as string}
+          </span>
+        )}
       </div>
     );
   }
@@ -314,29 +352,12 @@ const RecipeModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-4">
         <Heading title="Add images" subtitle="Add images for your recipe" />
-        {/* <UploadButton
-          endpoint="imageUploader"
-          onClientUploadComplete={(res) => {
-            // Do something with the response
-            console.log("Files: ", res);
-            setImageUrl(res[0].url);
-            setCustomValue("imageSrc", res[0].url);
-          }}
-          onUploadError={(error: Error) => {
-            // Do something with the error.
-            alert(`ERROR! ${error.message}`);
-          }}
-        />
-        {imageUrl && (
-          <Image
-            alt="Image"
-            src={imageUrl}
-            width={500}
-            height={500}
-            style={{ objectFit: "cover" }}
-          />
-        )} */}
         <ImageUpload setCustomValue={setCustomValue} />
+        {errors.imageSrc && (
+          <span className="text-red-500">
+            {errors.imageSrc.message as string}
+          </span>
+        )}
       </div>
     );
   }

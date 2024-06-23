@@ -109,7 +109,7 @@ const Modal = ({
                     </Button>
                   )}
                   {primaryButtonAction && primaryButtonText && (
-                    <Button onClick={handleSubmit} className="h-12">
+                    <Button onClick={handleSubmit} className="h-12" disabled={disabled}>
                       {primaryButtonText}
                     </Button>
                   )}
