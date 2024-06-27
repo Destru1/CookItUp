@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import {toast} from "react-hot-toast";
 import { type SafeRecipe, type SafeUser } from "~/app/types";
 import Container from "~/components/container";
 import Heading from "~/components/heading";
@@ -24,7 +25,7 @@ const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
       axios
         .delete(`/api/recipes/${id}`)
         .then(() => {
-          //TODO add toast
+          toast.success("Recipe deleted successfully");
           console.log("deleted");
           router.refresh();
         })

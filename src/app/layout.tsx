@@ -10,6 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "auth";
 import RecipeModal from "~/components/modals/recipe-modal";
 import IngredientsModal from "~/components/modals/ingredients-modal";
+import ToasterProvider from "./providers/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={`font-sans ${inter.variable}`}>
           <ClientOnly>
+            <ToasterProvider/>
             <Header />
             <RegisterModal />
             <LoginModal />

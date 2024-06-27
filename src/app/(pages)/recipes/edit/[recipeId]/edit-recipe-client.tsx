@@ -16,6 +16,7 @@ import { UploadButton } from "~/utils/uploadthing";
 import Image from "next/image";
 import { IoMdTrash } from "react-icons/io";
 import Loader from "~/components/Loader";
+import {toast} from "react-hot-toast";
 
 interface EditRecipeClientProps {
   recipe: SafeRecipe;
@@ -128,6 +129,7 @@ const EditRecipeClient = ({ recipe, currentUser }: EditRecipeClientProps) => {
   const onSubmit = async (data: FormData) => {
     try {
       await axios.put(`/api/recipes/${recipe.id}`, data);
+      toast.success("Recipe updated successfully");
       console.log("Recipe updated successfully");
       router.push(`/recipes/${recipe.id}`);
     } catch (error) {

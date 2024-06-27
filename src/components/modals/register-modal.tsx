@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import useRegisterModal from "~/app/hooks/useRegisterModal";
-import {signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Modal from "./modal";
 import useLoginModal from "~/app/hooks/useLoginModal";
 import { useState, useCallback, use } from "react";
@@ -29,6 +29,7 @@ import {
 import { RegisterSchema } from "~/schemas";
 import { FormError } from "../form-error";
 import SocialLogin from "./social-login";
+import { toast } from "react-hot-toast";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -52,6 +53,7 @@ const RegisterModal = () => {
       .post("/api/register", values)
       .then(() => {
         setIsLoading(false);
+        toast.success("Account created successfully");
         registerModal.onClose();
       })
       .catch((error) => {
@@ -59,8 +61,6 @@ const RegisterModal = () => {
         console.error(error);
       });
   };
-
-
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -146,7 +146,7 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
-     <SocialLogin/>
+      <SocialLogin />
       <div className=" mt-4 text-center font-light text-neutral-500">
         <div className="flex flex-row items-center justify-center gap-2">
           <div>Already have an account?</div>

@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 interface RecipeCommentProps {
   recipeId: string;
@@ -60,9 +61,11 @@ const RecipeComment = ({ recipeId }: RecipeCommentProps) => {
           rating,
         });
         router.push("/");
+        toast.success("Comment updated successfully");
       } else {
         await axios.post("/api/comment", { content, rating, recipeId });
         router.push("/");
+        toast.success("Comment submitted successfully");
       }
 
       setContent("");
@@ -83,7 +86,7 @@ const RecipeComment = ({ recipeId }: RecipeCommentProps) => {
             value={content}
             onChange={handleChange}
             placeholder="Write your comment here"
-            className="mt-4"
+            className="mt-4 resize-none"
             required
           />
           <div>

@@ -56,13 +56,13 @@ const UserMenu = () => {
           <div className="flex cursor-pointer flex-col">
             {user ? (
               <>
-                <MenuItem
+                {/* <MenuItem
                   label="Profile"
                   onClick={() => {
                     console.log("profile");
                     setIsOpen(false);
                   }}
-                />
+                /> */}
                 <MenuItem
                   label="What to eat"
                   onClick={() => {

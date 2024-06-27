@@ -22,6 +22,7 @@ import { Textarea } from "../ui/textarea";
 import ImageUpload from "../uploadthing/image-upload";
 import { useRouter } from "next/navigation";
 import { IoMdTrash } from "react-icons/io";
+import { toast } from "react-hot-toast";
 
 enum STEPS {
   CATEGORY = 0,
@@ -108,13 +109,12 @@ const RecipeModal = () => {
       return;
     }
 
-   
-
     if (step !== STEPS.IMAGES) {
       return onNext();
     }
     setIsLoading(true);
     axios.post("/api/recipes", data).then(() => {
+      toast.success("Recipe created successfully");
       setIsLoading(false);
       router.refresh();
       reset();

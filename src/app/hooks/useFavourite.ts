@@ -3,6 +3,7 @@ import useLoginModal from "./useLoginModal";
 import { useCallback, useMemo } from "react";
 import { type SafeUser } from "../types";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 interface IUseFavourite {
   recipeId: string;
@@ -31,10 +32,10 @@ const useFavourite = ({ recipeId, currentUser }: IUseFavourite) => {
         let request;
         if (isFavourite) {
           request = () => axios.delete(`/api/favourites/${recipeId}`);
-          //TODO: add toast
+          toast.success("Recipe removed from favourites");
         } else {
           request = () => axios.post(`/api/favourites/${recipeId}`);
-          //TODO: add toast
+          toast.success("Recipe added to favourites");
         }
         await request();
         router.refresh();

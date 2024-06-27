@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
 import SocialLogin from "./social-login";
+import {toast} from "react-hot-toast";
 
 const LoginModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -46,6 +47,7 @@ const LoginModal = () => {
     setError("");
     startTransition(() => {
       login(values).then((data) => {
+        toast.success("Login successful");
         setError(data?.error);
         if(!data?.error){
           loginModal.onClose();
