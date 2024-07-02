@@ -13,14 +13,32 @@ interface RecipeHeadProps {
   userName: string | null;
   currentUser?: SafeUser | null;
 }
-const RecipeHead = ({
+const RecipeHead =  ({
   title,
   imageUrl,
   currentUser,
   id,
   userImg,
   userName,
-}: RecipeHeadProps) => {
+}: RecipeHeadProps)  => {
+  
+  const shareRecipe = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Instagram",
+          text: "Instagram",
+          url: "https://instagram.com",
+        });
+        console.log("Content shared successfully");
+      } catch (error) {
+        console.error("Error sharing content", error);
+      }
+    } else {
+      
+      console.log("Web Share API is not supported in your browser.");
+    }
+  };
   return (
     <>
       <style>
@@ -56,7 +74,11 @@ const RecipeHead = ({
               <IoMdPrint size={26} />
             </div>
             <div>
-              <RiShareForwardFill size={26} />
+              <RiShareForwardFill
+                size={26}
+                onClick={shareRecipe}
+                className="cursor-pointer"
+              />
             </div>
           </div>
         </div>

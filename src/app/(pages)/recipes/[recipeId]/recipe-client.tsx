@@ -55,7 +55,7 @@ const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
           <RecipeHead
             id={recipe.id}
             title={recipe.title}
-            imageUrl={recipe.imageUrl || "images/placeholder.jpg"}
+            imageUrl={recipe.imageUrl || "/images/recipe-placeholder.jpg"}
             userImg={recipe.user.image}
             userName={recipe.user.name}
             currentUser={currentUser}
