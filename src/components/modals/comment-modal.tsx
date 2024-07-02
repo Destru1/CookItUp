@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Heading from "../heading";
 import { Textarea } from "../ui/textarea";
-import Rating from "react-rating-stars-component";
+import { Rating } from 'react-simple-star-rating'
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
@@ -95,17 +95,19 @@ const CommentModal = ({ recipeId }: RecipeCommentProps) => {
             className="mt-4 resize-none"
             required
           />
-          <div>
-            <p className="text-center text-lg font-light">Rating: </p>
+          <div className="flex items-center">
+            <p className="text-center text-lg font-light mr-2">Rating: </p>
+          
+
             <Rating
-              id="rating"
-              name="rating"
-              value={rating}
-              onChange={handleRatingChange}
+              initialValue={rating}
+              iconsCount={5}
+              SVGclassName={`inline-block`}
+              onClick={handleRatingChange}
               size={30}
-              activeColor="#ffd700"
-              required
-            />
+            
+              />
+            
           </div>
           <Button onClick={handleSubmit} className="m-auto mt-4 ">
             {commentId ? "Update Comment" : "Submit Comment"}
