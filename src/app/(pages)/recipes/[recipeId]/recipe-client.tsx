@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SafeRecipe, SafeUser,SafeComment } from "~/app/types";
+import { SafeRecipe, SafeUser, SafeComment } from "~/app/types";
 import Container from "~/components/container";
 import RecipeHead from "~/components/recipe/recipe-head";
 import RecipeInfo from "~/components/recipe/recipe-info";
@@ -10,10 +10,13 @@ import { useMemo } from "react";
 import { categories } from "~/data/categories";
 import RecipeComment from "~/components/recipe/recipe-comment";
 import RecipeCommentList from "~/components/recipe/recipe-comment-list";
+import { Button } from "~/components/ui/button";
+import useCommentsModal from "~/app/hooks/useCommentModal";
+import CommentModal from "~/components/modals/comment-modal";
 
 interface RecipeClientProps {
   recipe: SafeRecipe & {
-    user: SafeUser
+    user: SafeUser;
     comments: SafeComment[];
   };
   currentUser?: SafeUser | null;
@@ -21,6 +24,7 @@ interface RecipeClientProps {
 
 const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
   const [comments, setComments] = useState<[]>([]);
+  const commentModal = useCommentsModal();
 
   const category = useMemo(() => {
     return categories.filter(
@@ -70,7 +74,9 @@ const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
           </div>
         </div>
         <RecipeCommentList comments={comments} />
-        <RecipeComment recipeId={recipe.id} />
+        {/* <RecipeComment recipeId={recipe.id} /> */}
+        <Button onClick={commentModal.onOpen}>Add Comment</Button>
+        <CommentModal recipeId={recipe.id} />
       </div>
     </Container>
   );

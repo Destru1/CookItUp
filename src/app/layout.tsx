@@ -11,6 +11,7 @@ import { auth } from "auth";
 import RecipeModal from "~/components/modals/recipe-modal";
 import IngredientsModal from "~/components/modals/ingredients-modal";
 import ToasterProvider from "./providers/toast-provider";
+import CommentModal from "~/components/modals/comment-modal";
 
 const inter = Inter({
   subsets: ["latin"],
