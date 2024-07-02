@@ -8,7 +8,6 @@ import RecipeHead from "~/components/recipe/recipe-head";
 import RecipeInfo from "~/components/recipe/recipe-info";
 import { useMemo } from "react";
 import { categories } from "~/data/categories";
-import RecipeComment from "~/components/recipe/recipe-comment";
 import RecipeCommentList from "~/components/recipe/recipe-comment-list";
 import { Button } from "~/components/ui/button";
 import useCommentsModal from "~/app/hooks/useCommentModal";
