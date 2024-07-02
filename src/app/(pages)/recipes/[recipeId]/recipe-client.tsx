@@ -17,7 +17,6 @@ import CommentModal from "~/components/modals/comment-modal";
 interface RecipeClientProps {
   recipe: SafeRecipe & {
     user: SafeUser;
-    comments: SafeComment[];
   };
   currentUser?: SafeUser | null;
 }

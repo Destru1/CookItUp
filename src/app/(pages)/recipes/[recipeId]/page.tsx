@@ -12,7 +12,7 @@ const RecipePage = async ({ params }: { params: IParams }) => {
   const currentUser = await getCurrentUser();
   return (
     <ClientOnly>
-      <RecipeClient recipe={recipe} currentUser={currentUser} />
+      <RecipeClient recipe={recipe} currentUser={currentUser}  />
       
     </ClientOnly>
   );
