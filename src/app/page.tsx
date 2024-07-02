@@ -7,7 +7,7 @@ import { ingredients } from "~/data/ingredients";
 import Modal from "~/components/modals/modal";
 import RegisterModal from "~/components/modals/register-modal";
 import Categories from "~/components/categories";
-import RecipeCard from "~/components/recipe/RecipeCard";
+import RecipeCard from "~/components/recipe/recipe-card";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import getRecipes, { type IRecipesParams } from "./actions/getRecipes";

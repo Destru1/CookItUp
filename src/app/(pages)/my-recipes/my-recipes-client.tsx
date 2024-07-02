@@ -3,11 +3,11 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { type SafeRecipe, type SafeUser } from "~/app/types";
 import Container from "~/components/container";
 import Heading from "~/components/heading";
-import RecipeCard from "~/components/recipe/RecipeCard";
+import RecipeCard from "~/components/recipe/recipe-card";
 
 interface MyRecipesClientProps {
   recipes: SafeRecipe[];

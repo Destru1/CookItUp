@@ -8,8 +8,8 @@ import RecipeHead from "~/components/recipe/recipe-head";
 import RecipeInfo from "~/components/recipe/recipe-info";
 import { useMemo } from "react";
 import { categories } from "~/data/categories";
-import RecipeComment from "~/components/recipe/RecipeComment";
-import RecipeCommentList from "~/components/recipe/RecipeCommentList";
+import RecipeComment from "~/components/recipe/recipe-comment";
+import RecipeCommentList from "~/components/recipe/recipe-comment-list";
 
 interface RecipeClientProps {
   recipe: SafeRecipe & {

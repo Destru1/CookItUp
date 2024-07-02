@@ -67,8 +67,8 @@ const RecipeCard = ({
           <div className="relative aspect-square w-full overflow-hidden rounded-xl">
             <Image
               fill
-              alt="Listing"
-              src={data.imageUrl}
+              alt="Recipe"
+              src={data.imageUrl || "/images/recipe-placeholder.jpg"}
               className="h-full w-full object-cover transition group-hover:scale-110"
             />
             <div className="absolute right-3 top-3">
