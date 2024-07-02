@@ -21,13 +21,13 @@ export async function GET(request: Request) {
     where.title = { contains: title, mode: "insensitive" };
   }
 
-  if (ingredients) {
-    where.ingredients = {
-      some: {
-        name: { contains: ingredients, mode: "insensitive" },
-      },
-    };
-  }
+  // if (ingredients) {
+  //   where.ingredients = {
+  //     some: {
+  //       name: { contains: ingredients, mode: "insensitive" },
+  //     },
+  //   };
+  // }
 
   const recipes = await db.recipe.findMany({
     where,

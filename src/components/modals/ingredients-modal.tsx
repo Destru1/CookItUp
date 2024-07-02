@@ -33,7 +33,11 @@ const IngredientsModal = () => {
   };
 
   const handleSearch = () => {
-    router.push(`/?ingredients=${selectedIngredients.join("&")}`);
+    const queryString = selectedIngredients
+      .map((ingredient) => `ingredients=${encodeURIComponent(ingredient)}`)
+      .join("&");
+    router.push(`/?${queryString}`);
+    setSelectedIngredients([]);
     setSelectedIngredients([]);
   };
   const filteredIngredients = ingredients.filter((ingredient) =>
