@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Heading from "../heading";
 import { Textarea } from "../ui/textarea";
-import { Rating } from 'react-simple-star-rating'
+import { Rating } from "react-simple-star-rating";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useCurrentUser } from "~/app/hooks/useCurrentUser";
@@ -15,7 +15,12 @@ import Modal from "./modal";
 interface RecipeCommentProps {
   recipeId: string;
 }
-
+interface Comment {
+  id: string;
+  content: string;
+  rating: number;
+  userId: string;
+}
 const CommentModal = ({ recipeId }: RecipeCommentProps) => {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(3);
@@ -31,7 +36,7 @@ const CommentModal = ({ recipeId }: RecipeCommentProps) => {
           params: { recipeId },
         });
         const existingComment = response.data.find(
-          (comment) => comment.userId === currentUser?.id,
+          (comment: Comment) => comment.userId === currentUser?.id,
         );
         if (existingComment) {
           setContent(existingComment.content);
@@ -46,16 +51,16 @@ const CommentModal = ({ recipeId }: RecipeCommentProps) => {
     fetchComment();
   }, [recipeId]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === "content") setContent(value);
   };
 
-  const handleRatingChange = (newRating) => {
+  const handleRatingChange = (newRating: number) => {
     setRating(newRating);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       if (commentId) {
@@ -96,8 +101,7 @@ const CommentModal = ({ recipeId }: RecipeCommentProps) => {
             required
           />
           <div className="flex items-center">
-            <p className="text-center text-lg font-light mr-2">Rating: </p>
-          
+            <p className="mr-2 text-center text-lg font-light">Rating: </p>
 
             <Rating
               initialValue={rating}
@@ -105,9 +109,7 @@ const CommentModal = ({ recipeId }: RecipeCommentProps) => {
               SVGclassName={`inline-block`}
               onClick={handleRatingChange}
               size={30}
-            
-              />
-            
+            />
           </div>
           <Button onClick={handleSubmit} className="m-auto mt-4 ">
             {commentId ? "Update Comment" : "Submit Comment"}

@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 const IngredientsModal = () => {
   const ingredientModal = useIngredientsModal();
   const router = useRouter();
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
