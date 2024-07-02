@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { SafeComment } from "~/app/types";
+import { SafeComment, SafeUser } from "~/app/types";
 import Heading from "../heading";
 import { FaRegStar } from "react-icons/fa";
 import { formatDate } from "~/helpers/formatDate";
 
 interface RecipeCommentListProps {
-  comments: SafeComment[];
+  comments: (SafeComment & { user: SafeUser })[];
 }
 
 const RecipeCommentList = ({ comments }: RecipeCommentListProps) => {
@@ -23,7 +23,7 @@ const RecipeCommentList = ({ comments }: RecipeCommentListProps) => {
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Image
-                        src={comment.user.image}
+                        src={comment.user.image ?? "/images/placeholder.jpg"}
                         alt="User"
                         width={20}
                         height={20}
