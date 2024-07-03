@@ -47,11 +47,11 @@ const LoginModal = () => {
     setError("");
     startTransition(() => {
       login(values).then((data) => {
-        toast.success("Login successful");
         setError(data?.error);
         if(!data?.error){
           loginModal.onClose();
           router.refresh();
+          toast.success("Login successful");
         }
       });
     });

@@ -74,7 +74,7 @@ const RecipeClient = ({ recipe, currentUser }: RecipeClientProps) => {
         <div className="print:hidden">
           <RecipeCommentList comments={comments} />
           {/* <RecipeComment recipeId={recipe.id} /> */}
-          <Button onClick={commentModal.onOpen}>Add Comment</Button>
+          <Button onClick={commentModal.onOpen} className="mt-8">Add Comment</Button>
         </div>
         <CommentModal recipeId={recipe.id} />
       </div>
