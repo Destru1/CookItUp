@@ -28,8 +28,8 @@ const ImageUpload: React.FC<ImageUploaderProps> = ({ setCustomValue }) => {
           className="mx-auto"
           alt="Image"
           src={imageUrl}
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           style={{ objectFit: "cover" }}
         />
       )}
