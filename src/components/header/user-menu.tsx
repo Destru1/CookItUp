@@ -84,6 +84,14 @@ const UserMenu = () => {
                     setIsOpen(false);
                   }}
                 />
+                {user.role === "ADMIN" && (
+                <MenuItem
+                  label="Recipe request"
+                  onClick={() => {
+                    router.push("/requests");
+                    setIsOpen(false);
+                  }}
+                />)}
                 <MenuItem label="Logout" onClick={handleSignOut} />
               </>
             ) : (

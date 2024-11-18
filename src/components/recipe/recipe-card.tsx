@@ -56,8 +56,11 @@ const RecipeCard = ({
     [onEdit, actionId, disabled],
   );
 
+  if(data.approved === false) {
+    return null;
+  }
   return (
-    <>
+  <>
       <div
         onClick={() => router.push(`/recipes/${data.id}`)}
         key={data.id}
