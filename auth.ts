@@ -12,7 +12,7 @@ export const {
   auth,
 } = NextAuth({
   callbacks: {
-    async session({ token, session }) {
+    async session({ token, session }: { token: any; session: any }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -20,7 +20,7 @@ export const {
      
       return session;
     },
-    async jwt({ token }) {
+    async jwt({ token }: { token: any }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
