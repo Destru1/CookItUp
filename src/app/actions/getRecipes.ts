@@ -5,17 +5,27 @@ export interface IRecipesParams {
   ingredients?: string | string[];
   category?: string;
   userId?: string;
+  approved?: string;
 }
 
 export default async function getRecipes(params: IRecipesParams) {
   try {
-    const { title = "", ingredients = [], category = "", userId = "" } = params;
+    const {
+      title = "",
+      ingredients = [],
+      category = "",
+      userId = "",
+      approved = "approved",
+    } = params;
 
     const categories = category.split(",").filter(Boolean);
 
-
-    const ingredientsList = Array.isArray(ingredients) ? ingredients : [ingredients];
-    const cleanedIngredientsList = ingredientsList.flatMap(ing => ing.split(/[,&]/)).filter(Boolean);
+    const ingredientsList = Array.isArray(ingredients)
+      ? ingredients
+      : [ingredients];
+    const cleanedIngredientsList = ingredientsList
+      .flatMap((ing) => ing.split(/[,&]/))
+      .filter(Boolean);
 
     const query: any = {};
 
@@ -40,6 +50,13 @@ export default async function getRecipes(params: IRecipesParams) {
       query.userId = userId;
     }
 
+    if (approved === "all") {
+      
+    } else if (approved === "pending") {
+      query.approved = false;
+    } else if (approved === "approved") {
+      query.approved = true;
+    }
     const recipes = await db.recipe.findMany({
       where: query,
       orderBy: {
