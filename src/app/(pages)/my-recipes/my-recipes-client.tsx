@@ -57,7 +57,7 @@ const MyRecipesClient = ({ recipes, currentUser }: MyRecipesClientProps) => {
         <div className="grid grid-cols-1 gap-8 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5">
           {recipes.map((recipe) => {
             return (
-              <div className=" relative">
+              <div className="relative" key={recipe.id}>
                 <RecipeCard
                   currentUser={currentUser}
                   key={recipe.id}
