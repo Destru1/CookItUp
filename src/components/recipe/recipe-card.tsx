@@ -102,7 +102,10 @@ const RecipeCard = ({
                 {data.likeCount}
               </div>
               <div className="flex items-center gap-1 text-slate-500">
-                <FaRegStar size={20} /> {data.totalRating && data.timesRated ? data.totalRating / data.timesRated : 0}
+                <FaRegStar size={20} />{" "}
+                {data.totalRating && data.timesRated
+                  ? data.totalRating / data.timesRated
+                  : 0}
               </div>
             </div>
           </div>
@@ -113,8 +116,12 @@ const RecipeCard = ({
             disabled={disabled}
             size="sm"
             onClick={handleUpdate}
-            variant="secondary"
-            className="mx-auto mb-4 flex w-[80%] rounded-b-lg transition hover:bg-neutral-300/80"
+            variant={editLabel === "Approve" ? "success" : "secondary"}
+            className={`mx-auto mb-4 flex w-[80%] rounded-b-lg transition ${
+              editLabel === "Approve"
+                ? "hover:bg-[#139435]/90"
+                : "hover:bg-secondary/80"
+            }`}
           >
             {editLabel}
           </Button>

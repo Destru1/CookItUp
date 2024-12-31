@@ -6,7 +6,7 @@ import EmptyState from "~/components/empty-state";
 
 const MyRecipesPage = async () => {
   const currentUser = await getCurrentUser();
-  const recipes = await getRecipes({ userId: currentUser?.id });
+  const recipes = await getRecipes({ userId: currentUser?.id,approved: "all" });
 
   if (recipes.length === 0) {
     <ClientOnly>

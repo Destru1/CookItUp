@@ -11,6 +11,11 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?
@@ -21,6 +26,7 @@ model User {
     favouriteIds  String[]  @default([])
     createdAt     DateTime  @default(now())
     updatedAt     DateTime  @updatedAt
+    role          Role    @default(USER)
     recipes       Recipe[] // One-to-many relation with Recipe
     comments      Comment[] // One-to-many relation with Comment
     accounts      Account[]
@@ -61,6 +67,7 @@ model Recipe {
     updatedAt   DateTime  @updatedAt
     timesRated  Int?      @default(0)
     totalRating Int?      @default(0)
+    approved    Boolean   @default(false)
     userId      String
     comments    Comment[]
     user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)

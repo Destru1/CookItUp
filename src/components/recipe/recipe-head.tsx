@@ -60,10 +60,10 @@ const RecipeHead =  ({
             <div className="ml-2 flex gap-1">
               <Image
                 alt={`${userName} profile picture`}
-                src={userImg ?? ""}
+                src={userImg ?? "/images/placeholder.jpg"}
                 width={20}
                 height={20}
-                className="rounded-xl object-cover "
+                className="rounded-full object-cover "
               />
               {userName}
             </div>
