@@ -11,7 +11,10 @@ export async function POST(request: Request) {
   const isEmailTaken = await getUserByEmail(email);
 
   if (isEmailTaken) {
-    return NextResponse.json({ error: "Email is already taken" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Email is already taken" },
+      { status: 400 },
+    );
   }
 
   const user = await db.user.create({
@@ -22,7 +25,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(user, { status: 201 });
+  return NextResponse.json({ success: "true" }, { status: 200 });
 }
 
 export async function GET(req: Request) {
