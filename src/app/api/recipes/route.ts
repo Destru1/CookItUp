@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
   if (!currentUser) {
     console.log("no user");
-    return NextResponse.error();
+    return NextResponse.json('Unauthenticated', { status: 401 });
   }
 
   const body = await request.json();
@@ -58,12 +58,28 @@ export async function POST(request: Request) {
     imageSrc,
   } = body;
 
-  Object.keys(body).forEach((key) => {
-    if (!body[key]) {
-      console.log("missing field: ", key);
-      return NextResponse.error();
-    }
-  });
+
+  if (
+    title === undefined ||
+    title === null ||
+    category === undefined ||
+    category === null ||
+    ingredients === undefined ||
+    ingredients === null ||
+    servingsCount === undefined ||
+    servingsCount === null ||
+    calories === undefined ||
+    calories === null ||
+    cookTime === undefined ||
+    cookTime === null ||
+    description === undefined ||
+    description === null ||
+    imageSrc === undefined ||
+    imageSrc === null
+  ) {
+    console.log("missing field");
+    return NextResponse.json({ error: "Missing field" }, { status: 400 });
+  }
 
   const recipe = await db.recipe.create({
     data: {
@@ -81,5 +97,3 @@ export async function POST(request: Request) {
   console.log("recipe: ", recipe);
   return NextResponse.json(recipe);
 }
-
-
